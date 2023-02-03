@@ -60,7 +60,7 @@ export const ErrorText = styled(Text)<{ severity?: 0 | 1 | 2 | 3 }>`
     severity === 3 ? theme.red1 : severity === 2 ? theme.yellow2 : severity === 1 ? theme.green1 : theme.text1};
 `
 
-export const InputGroup = styled(AutoColumn)`
+export const InputGroup = styled(AutoColumn as any)`
   position: relative;
   padding: 40px 0 20px 0;
 `

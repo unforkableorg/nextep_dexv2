@@ -5,7 +5,7 @@ const Column = styled.div`
   flex-direction: column;
   justify-content: flex-start;
 `
-export const ColumnCenter = styled(Column)`
+export const ColumnCenter = styled(Column as any)`
   width: 100%;
   align-items: center;
 `

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { Box } from 'rebass/styled-components'
 
-const Row = styled(Box)<{ align?: string; padding?: string; border?: string; borderRadius?: string }>`
+const Row = styled(Box as any)<{ align?: string; padding?: string; border?: string; borderRadius?: string }>`
   width: 100%;
   display: flex;
   padding: 0;
@@ -12,7 +12,7 @@ const Row = styled(Box)<{ align?: string; padding?: string; border?: string; bor
   border-radius: ${({ borderRadius }) => borderRadius};
 `
 
-export const RowBetween = styled(Row)<{ align?: string; padding?: string; border?: string; borderRadius?: string }>`
+export const RowBetween = styled(Row as any)<{ align?: string; padding?: string; border?: string; borderRadius?: string }>`
   justify-content: space-between;
 `
 
@@ -21,7 +21,7 @@ export const RowFlat = styled.div`
   align-items: flex-end;
 `
 
-export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
+export const AutoRow = styled(Row as any)<{ gap?: string; justify?: string }>`
   flex-wrap: wrap;
   margin: ${({ gap }) => gap && `-${gap}`};
   justify-content: ${({ justify }) => justify && justify};
@@ -31,7 +31,7 @@ export const AutoRow = styled(Row)<{ gap?: string; justify?: string }>`
   }
 `
 
-export const RowFixed = styled(Row)<{ gap?: string; justify?: string }>`
+export const RowFixed = styled(Row as any)<{ gap?: string; justify?: string }>`
   width: fit-content;
   margin: ${({ gap }) => gap && `-${gap}`};
 `
