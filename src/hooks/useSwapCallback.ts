@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
-import { ChainId, Token, Trade, TradeType, WETH } from '@uniswap/sdk'
+import { ChainId, Token, Trade, TradeType, WCXS } from '@uniswap/sdk'
 import { useMemo } from 'react'
 import { DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE, ROUTER_ADDRESS } from '../constants'
 import { useTokenAllowance } from '../data/Allowances'
@@ -21,17 +21,17 @@ enum SwapType {
 
 function getSwapType(tokens: { [field in Field]?: Token }, isExactIn: boolean, chainId: number): SwapType {
   if (isExactIn) {
-    if (tokens[Field.INPUT]?.equals(WETH[chainId as ChainId])) {
+    if (tokens[Field.INPUT]?.equals(WCXS[chainId as ChainId])) {
       return SwapType.EXACT_ETH_FOR_TOKENS
-    } else if (tokens[Field.OUTPUT]?.equals(WETH[chainId as ChainId])) {
+    } else if (tokens[Field.OUTPUT]?.equals(WCXS[chainId as ChainId])) {
       return SwapType.EXACT_TOKENS_FOR_ETH
     } else {
       return SwapType.EXACT_TOKENS_FOR_TOKENS
     }
   } else {
-    if (tokens[Field.INPUT]?.equals(WETH[chainId as ChainId])) {
+    if (tokens[Field.INPUT]?.equals(WCXS[chainId as ChainId])) {
       return SwapType.ETH_FOR_EXACT_TOKENS
-    } else if (tokens[Field.OUTPUT]?.equals(WETH[chainId as ChainId])) {
+    } else if (tokens[Field.OUTPUT]?.equals(WCXS[chainId as ChainId])) {
       return SwapType.TOKENS_FOR_EXACT_ETH
     } else {
       return SwapType.TOKENS_FOR_EXACT_TOKENS
@@ -66,7 +66,7 @@ export function useSwapCallback(
 
     // no allowance
     if (
-      !trade.inputAmount.token.equals(WETH[chainId as ChainId]) &&
+      !trade.inputAmount.token.equals(WCXS[chainId as ChainId]) &&
       (!inputAllowance || slippageAdjustedInput.greaterThan(inputAllowance))
     ) {
       return null

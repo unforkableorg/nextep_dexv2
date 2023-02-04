@@ -1,6 +1,6 @@
 import { parse } from 'qs'
 import { createReducer } from '@reduxjs/toolkit'
-import { ChainId, WETH } from '@uniswap/sdk'
+import { ChainId, WCXS } from '@uniswap/sdk'
 import { isAddress } from '../../utils'
 import { Field, selectToken, setDefaultsFromURL, switchTokens, typeInput } from './actions'
 
@@ -30,11 +30,11 @@ function parseCurrencyFromURLParameter(urlParam: any, chainId: number): string {
   if (typeof urlParam === 'string') {
     const valid = isAddress(urlParam)
     if (valid) return valid
-    if (urlParam.toLowerCase() === 'eth') return WETH[chainId as ChainId]?.address ?? ''
-    if (valid === false) return WETH[chainId as ChainId]?.address ?? ''
+    if (urlParam.toLowerCase() === 'eth') return WCXS[chainId as ChainId]?.address ?? ''
+    if (valid === false) return WCXS[chainId as ChainId]?.address ?? ''
   }
 
-  return WETH[chainId as ChainId]?.address
+  return WCXS[chainId as ChainId]?.address
 }
 
 function parseTokenAmountURLParameter(urlParam: any): string {
@@ -76,7 +76,7 @@ export default createReducer<SwapState>(initialState, builder =>
       return {
         ...initialState,
         [Field.INPUT]: {
-          address: WETH[chainId as ChainId]?.address ?? ''
+          address: WCXS[chainId as ChainId]?.address ?? ''
         }
       }
     })

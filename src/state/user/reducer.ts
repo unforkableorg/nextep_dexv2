@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { ChainId, WETH } from '@uniswap/sdk'
+import { ChainId, WCXS } from '@uniswap/sdk'
 import {
   addSerializedPair,
   addSerializedToken,
@@ -72,7 +72,7 @@ export default createReducer(initialState, builder =>
         if (state.timestamp < 1590027589111) {
           // this should remove the user added token from 'eth' for mainnet
           if (state.tokens[ChainId.MAINNET]) {
-            delete state.tokens[ChainId.MAINNET][WETH[ChainId.MAINNET].address]
+            delete state.tokens[ChainId.MAINNET][WCXS[ChainId.MAINNET].address]
           }
         }
       }

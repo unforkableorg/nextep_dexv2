@@ -9,7 +9,7 @@ import IUniswapV1Factory from '../constants/abis/v1_factory.json'
 import ERC20_ABI from '../constants/abis/erc20.json'
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { injected } from '../connectors'
-import { NetworkContextName, V1_FACTORY_ADDRESS } from '../constants'
+import { NetworkContextName } from '../constants'
 import { getContract, isAddress } from '../utils'
 
 export function useActiveWeb3React() {
@@ -194,10 +194,6 @@ function useContract(address?: string, ABI?: any, withSignerIfPossible = true): 
       return null
     }
   }, [address, ABI, library, withSignerIfPossible, account])
-}
-
-export function useV1FactoryContract(): Contract | null {
-  return useContract(V1_FACTORY_ADDRESS, IUniswapV1Factory, false)
 }
 
 // returns null on errors

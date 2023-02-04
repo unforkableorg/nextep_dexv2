@@ -4,7 +4,7 @@ import styled, { ThemeContext } from 'styled-components'
 import '@reach/tooltip/styles.css'
 import { darken } from 'polished'
 import { Field } from '../../state/swap/actions'
-import { useTokenBalanceTreatingWETHasETH } from '../../state/wallet/hooks'
+import { useTokenBalanceTreatingWCXSasCXS } from '../../state/wallet/hooks'
 
 import TokenLogo from '../TokenLogo'
 import DoubleLogo from '../DoubleLogo'
@@ -161,7 +161,7 @@ export default function CurrencyInputPanel({
 
   const [modalOpen, setModalOpen] = useState(false)
   const { account } = useActiveWeb3React()
-  const userTokenBalance = useTokenBalanceTreatingWETHasETH(account, token)
+  const userTokenBalance = useTokenBalanceTreatingWCXSasCXS(account, token)
   const theme = useContext(ThemeContext)
 
   return (

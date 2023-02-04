@@ -6,9 +6,8 @@ import { useActiveWeb3React } from '../../hooks'
 import { useTokenByAddressAndAutomaticallyAdd } from '../../hooks/Tokens'
 import { useTradeExactIn, useTradeExactOut } from '../../hooks/Trades'
 import { AppDispatch, AppState } from '../index'
-import { useTokenBalancesTreatWETHAsETH } from '../wallet/hooks'
+import { useTokenBalancesTreatWCXSAsCXS } from '../wallet/hooks'
 import { Field, selectToken, setDefaultsFromURL, switchTokens, typeInput } from './actions'
-import { useV1TradeLinkIfBetter } from '../../data/V1'
 import { V1_TRADE_LINK_THRESHOLD } from '../../constants'
 
 export function useSwapState(): AppState['swap'] {
@@ -76,7 +75,6 @@ export function useDerivedSwapInfo(): {
   parsedAmounts: { [field in Field]?: TokenAmount }
   bestTrade: Trade | null
   error?: string
-  v1TradeLinkIfBetter?: string
 } {
   const { account } = useActiveWeb3React()
 
@@ -90,7 +88,7 @@ export function useDerivedSwapInfo(): {
   const tokenIn = useTokenByAddressAndAutomaticallyAdd(tokenInAddress)
   const tokenOut = useTokenByAddressAndAutomaticallyAdd(tokenOutAddress)
 
-  const relevantTokenBalances = useTokenBalancesTreatWETHAsETH(account ?? undefined, [tokenIn, tokenOut])
+  const relevantTokenBalances = useTokenBalancesTreatWCXSAsCXS(account ?? undefined, [tokenIn, tokenOut])
 
   const isExactIn: boolean = independentField === Field.INPUT
   const amount = tryParseAmount(typedValue, isExactIn ? tokenIn : tokenOut)
@@ -115,16 +113,6 @@ export function useDerivedSwapInfo(): {
     [Field.OUTPUT]: tokenOut
   }
 
-  // get link to trade on v1, if a better rate exists
-  const v1TradeLinkIfBetter = useV1TradeLinkIfBetter(
-    isExactIn,
-    tokens[Field.INPUT],
-    tokens[Field.OUTPUT],
-    isExactIn ? parsedAmounts[Field.INPUT] : parsedAmounts[Field.OUTPUT],
-    bestTrade ?? undefined,
-    V1_TRADE_LINK_THRESHOLD
-  )
-
   let error: string | undefined
   if (!account) {
     error = 'Connect Wallet'
@@ -148,8 +136,7 @@ export function useDerivedSwapInfo(): {
     tokenBalances,
     parsedAmounts,
     bestTrade,
-    error,
-    v1TradeLinkIfBetter
+    error
   }
 }
 

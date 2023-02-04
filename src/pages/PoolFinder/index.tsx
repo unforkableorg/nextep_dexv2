@@ -14,7 +14,7 @@ import { usePair } from '../../data/Reserves'
 import { useActiveWeb3React } from '../../hooks'
 import { useToken } from '../../hooks/Tokens'
 import { usePairAdder } from '../../state/user/hooks'
-import { useTokenBalanceTreatingWETHasETH } from '../../state/wallet/hooks'
+import { useTokenBalanceTreatingWCXSasCXS } from '../../state/wallet/hooks'
 import { Link } from '../../theme'
 import AppBody from '../AppBody'
 
@@ -42,7 +42,7 @@ export default function PoolFinder({ history }: RouteComponentProps) {
     }
   }, [pair, addPair])
 
-  const position: TokenAmount = useTokenBalanceTreatingWETHasETH(account, pair?.liquidityToken)
+  const position: TokenAmount = useTokenBalanceTreatingWCXSasCXS(account, pair?.liquidityToken)
 
   const newPair: boolean =
     pair === null ||

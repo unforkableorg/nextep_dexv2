@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { RouteComponentProps, Redirect } from 'react-router-dom'
-import { Token, WETH } from '@uniswap/sdk'
+import { Token, WCXS } from '@uniswap/sdk'
 import AppBody from '../AppBody'
 
 import Row, { AutoRow } from '../../components/Row'
@@ -32,7 +32,7 @@ export default function CreatePool({ history, location }: RouteComponentProps) {
   const [showSearch, setShowSearch] = useState<boolean>(false)
   const [activeField, setActiveField] = useState<number>(Fields.TOKEN0)
 
-  const [token0Address, setToken0Address] = useState<string>(WETH[chainId].address)
+  const [token0Address, setToken0Address] = useState<string>(WCXS[chainId].address)
   const [token1Address, setToken1Address] = useState<string>()
 
   const token0: Token = useToken(token0Address)
@@ -81,7 +81,7 @@ export default function CreatePool({ history, location }: RouteComponentProps) {
                 </Text>
                 {console.log(token0)}
                 <TYPE.darkGray fontWeight={500} fontSize={16} marginLeft={'8px'}>
-                  {token0?.address === WETH[chainId]?.address && '(default)'}
+                  {token0?.address === WCXS[chainId]?.address && '(default)'}
                 </TYPE.darkGray>
               </Row>
             </ButtonDropwdownLight>

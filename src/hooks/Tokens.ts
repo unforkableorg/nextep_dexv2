@@ -1,4 +1,4 @@
-import { ChainId, Token, WETH } from '@uniswap/sdk'
+import { ChainId, Token, WCXS } from '@uniswap/sdk'
 import { useEffect, useMemo } from 'react'
 import { ALL_TOKENS } from '../constants/tokens'
 import { useAddUserToken, useFetchTokenByAddress, useUserAddedTokens } from '../state/user/hooks'
@@ -24,12 +24,12 @@ export function useAllTokens(): { [address: string]: Token } {
         { ...ALL_TOKENS[chainId as ChainId] }
       )
 
-    const weth = WETH[chainId as ChainId]
-    if (weth) {
+    const wcxs = WCXS[chainId as ChainId]
+    if (wcxs) {
       // we have to replace it as a workaround because if it is automatically
       // fetched by address it will cause an invariant when used in constructing
       // pairs since we replace the name and symbol with 'ETH' and 'Ether'
-      tokens[weth.address] = weth
+      tokens[wcxs.address] = wcxs
     }
     return tokens
   }, [userAddedTokens, chainId])
@@ -54,8 +54,8 @@ export function useTokenByAddressAndAutomaticallyAdd(tokenAddress?: string): Tok
 
   useEffect(() => {
     if (!chainId || !isAddress(tokenAddress)) return
-    const weth = WETH[chainId as ChainId]
-    if (weth && weth.address === isAddress(tokenAddress)) return
+    const wcxs = WCXS[chainId as ChainId]
+    if (wcxs && wcxs.address === isAddress(tokenAddress)) return
 
     if (tokenAddress && !token) {
       fetchTokenByAddress(tokenAddress).then(token => {

@@ -2,7 +2,7 @@ import React from 'react'
 import { Link as HistoryLink } from 'react-router-dom'
 
 import styled from 'styled-components'
-import { useTokenBalanceTreatingWETHasETH } from '../../state/wallet/hooks'
+import { useTokenBalanceTreatingWCXSasCXS } from '../../state/wallet/hooks'
 
 import Row from '../Row'
 import Menu from '../Menu'
@@ -10,7 +10,7 @@ import Web3Status from '../Web3Status'
 
 import { Link } from '../../theme'
 import { Text } from 'rebass'
-import { WETH, ChainId } from '@uniswap/sdk'
+import { WCXS, ChainId } from '@uniswap/sdk'
 import { isMobile } from 'react-device-detect'
 import { YellowCard } from '../Card'
 import { useActiveWeb3React } from '../../hooks'
@@ -152,7 +152,7 @@ const VersionToggle = styled.a`
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
 
-  const userEthBalance = useTokenBalanceTreatingWETHasETH(account, WETH[chainId])
+  const userEthBalance = useTokenBalanceTreatingWCXSasCXS(account, WCXS[chainId])
   const [isDark] = useDarkModeManager()
 
   return (
@@ -197,10 +197,7 @@ export default function Header() {
         </HeaderElement>
         <HeaderElement>
           <TestnetWrapper>
-            {!isMobile && chainId === ChainId.ROPSTEN && <NetworkCard>Ropsten</NetworkCard>}
-            {!isMobile && chainId === ChainId.RINKEBY && <NetworkCard>Rinkeby</NetworkCard>}
-            {!isMobile && chainId === ChainId.GÖRLI && <NetworkCard>Görli</NetworkCard>}
-            {!isMobile && chainId === ChainId.KOVAN && <NetworkCard>Kovan</NetworkCard>}
+            {!isMobile && chainId === ChainId.TESTNET && <NetworkCard>Testnet</NetworkCard>}
           </TestnetWrapper>
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (

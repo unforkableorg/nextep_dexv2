@@ -1,5 +1,5 @@
 import { getAddress } from '@ethersproject/address'
-import { ChainId, JSBI, Token, TokenAmount, WETH } from '@uniswap/sdk'
+import { ChainId, JSBI, Token, TokenAmount, WCXS } from '@uniswap/sdk'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAllTokens } from '../../hooks/Tokens'
@@ -119,43 +119,43 @@ export function useTokenBalances(
   }, [address, validTokens, chainId, rawBalanceMap])
 }
 
-// contains the hacky logic to treat the WETH token input as if it's ETH to
+// contains the hacky logic to treat the WCXS token input as if it's CXS to
 // maintain compatibility until we handle them separately.
-export function useTokenBalancesTreatWETHAsETH(
+export function useTokenBalancesTreatWCXSAsCXS(
   address?: string,
   tokens?: (Token | undefined)[]
 ): { [tokenAddress: string]: TokenAmount | undefined } {
   const { chainId } = useActiveWeb3React()
-  const { tokensWithoutWETH, includesWETH } = useMemo(() => {
+  const { tokensWithoutWCXS, includesWCXS } = useMemo(() => {
     if (!tokens || tokens.length === 0) {
-      return { includesWETH: false, tokensWithoutWETH: [] }
+      return { includesWCXS: false, tokensWithoutWCXS: [] }
     }
-    let includesWETH = false
-    const tokensWithoutWETH = tokens.filter(t => {
+    let includesWCXS = false
+    const tokensWithoutWCXS = tokens.filter(t => {
       if (!chainId) return true
-      const isWETH = t?.equals(WETH[chainId as ChainId]) ?? false
-      if (isWETH) includesWETH = true
-      return !isWETH
+      const isWCXS = t?.equals(WCXS[chainId as ChainId]) ?? false
+      if (isWCXS) includesWCXS = true
+      return !isWCXS
     })
-    return { includesWETH, tokensWithoutWETH }
+    return { includesWCXS, tokensWithoutWCXS }
   }, [tokens, chainId])
 
-  const balancesWithoutWETH = useTokenBalances(address, tokensWithoutWETH)
-  const ETHBalance = useETHBalances(includesWETH ? [address] : [])
+  const balancesWithoutWCXS = useTokenBalances(address, tokensWithoutWCXS)
+  const ETHBalance = useETHBalances(includesWCXS ? [address] : [])
 
   return useMemo(() => {
     if (!chainId || !address) return {}
-    if (includesWETH) {
-      const weth = WETH[chainId as ChainId]
+    if (includesWCXS) {
+      const wcxs = WCXS[chainId as ChainId]
       const ethBalance = ETHBalance[address]
       return {
-        ...balancesWithoutWETH,
-        ...(ethBalance && weth ? { [weth.address]: new TokenAmount(weth, ethBalance) } : null)
+        ...balancesWithoutWCXS,
+        ...(ethBalance && wcxs ? { [wcxs.address]: new TokenAmount(wcxs, ethBalance) } : null)
       }
     } else {
-      return balancesWithoutWETH
+      return balancesWithoutWCXS
     }
-  }, [balancesWithoutWETH, ETHBalance, includesWETH, address, chainId])
+  }, [balancesWithoutWCXS, ETHBalance, includesWCXS, address, chainId])
 }
 
 // get the balance for a single token/account combo
@@ -166,19 +166,19 @@ export function useTokenBalance(account?: string, token?: Token): TokenAmount | 
 }
 
 // mimics the behavior of useAddressBalance
-export function useTokenBalanceTreatingWETHasETH(account?: string, token?: Token): TokenAmount | undefined {
-  const balances = useTokenBalancesTreatWETHAsETH(account, [token])
+export function useTokenBalanceTreatingWCXSasCXS(account?: string, token?: Token): TokenAmount | undefined {
+  const balances = useTokenBalancesTreatWCXSAsCXS(account, [token])
   if (!token) return
   return balances?.[token.address]
 }
 
 // mimics useAllBalances
-export function useAllTokenBalancesTreatingWETHasETH(): {
+export function useAllTokenBalancesTreatingWCXSasCXS(): {
   [account: string]: { [tokenAddress: string]: TokenAmount | undefined }
 } {
   const { account } = useActiveWeb3React()
   const allTokens = useAllTokens()
   const allTokensArray = useMemo(() => Object.values(allTokens ?? {}), [allTokens])
-  const balances = useTokenBalancesTreatWETHAsETH(account ?? undefined, allTokensArray)
+  const balances = useTokenBalancesTreatWCXSAsCXS(account ?? undefined, allTokensArray)
   return account ? { [account]: balances } : {}
 }

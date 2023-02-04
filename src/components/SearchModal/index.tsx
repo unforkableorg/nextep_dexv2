@@ -1,11 +1,11 @@
 import React, { useState, useRef, useMemo, useEffect, useContext } from 'react'
 import '@reach/tooltip/styles.css'
 import styled, { ThemeContext } from 'styled-components'
-import { JSBI, Token, WETH } from '@uniswap/sdk'
+import { JSBI, Token, WCXS } from '@uniswap/sdk'
 import { isMobile } from 'react-device-detect'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { COMMON_BASES } from '../../constants'
-import { useAllTokenBalancesTreatingWETHasETH } from '../../state/wallet/hooks'
+import { useAllTokenBalancesTreatingWCXSasCXS } from '../../state/wallet/hooks'
 import { Link as StyledLink } from '../../theme/components'
 
 import Card from '../../components/Card'
@@ -178,7 +178,7 @@ function SearchModal({
 
   const allTokens = useAllTokens()
   const allPairs = useAllDummyPairs()
-  const allBalances = useAllTokenBalancesTreatingWETHasETH()
+  const allBalances = useAllTokenBalancesTreatingWCXSasCXS()
 
   const [searchQuery, setSearchQuery] = useState('')
   const [invertSearchOrder, setInvertSearchOrder] = useState(false)
@@ -233,8 +233,8 @@ function SearchModal({
         // sort ETH first
         const a = allTokens[tokenAddressA]
         const b = allTokens[tokenAddressB]
-        if (a.equals(WETH[chainId])) return -1
-        if (b.equals(WETH[chainId])) return 1
+        if (a.equals(WCXS[chainId])) return -1
+        if (b.equals(WCXS[chainId])) return 1
 
         // sort by balances
         const balanceA = allBalances[account]?.[tokenAddressA]
@@ -352,7 +352,7 @@ function SearchModal({
     const searchQueryIsAddress = !!isAddress(searchQuery)
     return sortedPairList.filter(pair => {
       // if there's no search query, hide non-ETH pairs
-      if (searchQuery === '') return pair.token0.equals(WETH[chainId]) || pair.token1.equals(WETH[chainId])
+      if (searchQuery === '') return pair.token0.equals(WCXS[chainId]) || pair.token1.equals(WCXS[chainId])
 
       const token0 = pair.token0
       const token1 = pair.token1

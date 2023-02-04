@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { isAddress } from '../../utils'
 import { useActiveWeb3React } from '../../hooks'
-import { WETH } from '@uniswap/sdk'
+import { WCXS } from '@uniswap/sdk'
 
 import { ReactComponent as EthereumLogo } from '../../assets/images/ethereum-logo.svg'
 
@@ -53,8 +53,8 @@ export default function TokenLogo({
   }
 
   let path = ''
-  // hard code to show ETH instead of WETH in UI
-  if (address === WETH[chainId].address) {
+  // hard code to show ETH instead of WCXS in UI
+  if (address === WCXS[chainId].address) {
     return <StyledEthereumLogo size={size} {...rest} />
   } else if (!error && !BAD_IMAGES[address] && isAddress(address)) {
     path = TOKEN_ICON_API(address)

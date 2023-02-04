@@ -1,4 +1,4 @@
-import { ChainId, WETH } from '@uniswap/sdk'
+import { ChainId, WCXS } from '@uniswap/sdk'
 import { createStore, Store } from 'redux'
 import { Field, setDefaultsFromURL } from './actions'
 import reducer, { SwapState } from './reducer'
@@ -27,7 +27,7 @@ describe('swap reducer', () => {
 
       expect(store.getState()).toEqual({
         [Field.OUTPUT]: { address: '0x6B175474E89094C44Da98b954EedeAC495271d0F' },
-        [Field.INPUT]: { address: WETH[ChainId.MAINNET].address },
+        [Field.INPUT]: { address: WCXS[ChainId.MAINNET].address },
         typedValue: '20.5',
         independentField: Field.OUTPUT
       })
@@ -43,7 +43,7 @@ describe('swap reducer', () => {
 
       expect(store.getState()).toEqual({
         [Field.INPUT]: { address: '' },
-        [Field.OUTPUT]: { address: WETH[ChainId.MAINNET].address },
+        [Field.OUTPUT]: { address: WCXS[ChainId.MAINNET].address },
         typedValue: '',
         independentField: Field.INPUT
       })
@@ -58,7 +58,7 @@ describe('swap reducer', () => {
       )
 
       expect(store.getState()).toEqual({
-        [Field.OUTPUT]: { address: WETH[ChainId.MAINNET].address },
+        [Field.OUTPUT]: { address: WCXS[ChainId.MAINNET].address },
         [Field.INPUT]: { address: '' },
         typedValue: '20.5',
         independentField: Field.INPUT

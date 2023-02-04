@@ -1,24 +1,19 @@
-import { ChainId, Token, WETH } from '@uniswap/sdk'
-import KOVAN_TOKENS from './kovan'
+import { ChainId, Token, WCXS } from '@uniswap/sdk'
+
 import MAINNET_TOKENS from './mainnet'
-import RINKEBY_TOKENS from './rinkeby'
-import ROPSTEN_TOKENS from './ropsten'
 
 type AllTokens = Readonly<{ [chainId in ChainId]: Readonly<{ [tokenAddress: string]: Token }> }>
 export const ALL_TOKENS: AllTokens = [
-  // WETH on all chains
-  ...Object.values(WETH),
+  // WCXS on all chains
+  ...Object.values(WCXS),
   // chain-specific tokens
-  ...MAINNET_TOKENS,
-  ...RINKEBY_TOKENS,
-  ...KOVAN_TOKENS,
-  ...ROPSTEN_TOKENS
+  ...MAINNET_TOKENS
 ]
-  // remap WETH to ETH
+  // remap WCXS to ETH
   .map(token => {
-    if (token.equals(WETH[token.chainId])) {
-      ;(token as any).symbol = 'ETH'
-      ;(token as any).name = 'Ether'
+    if (token.equals(WCXS[token.chainId])) {
+      ;(token as any).symbol = 'CXS'
+      ;(token as any).name = 'CXS'
     }
     return token
   })
@@ -36,9 +31,6 @@ export const ALL_TOKENS: AllTokens = [
     },
     {
       [ChainId.MAINNET]: {},
-      [ChainId.RINKEBY]: {},
-      [ChainId.GÖRLI]: {},
-      [ChainId.ROPSTEN]: {},
-      [ChainId.KOVAN]: {}
+      [ChainId.TESTNET]: {}
     }
   )

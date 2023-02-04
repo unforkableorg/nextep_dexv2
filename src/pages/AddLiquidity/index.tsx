@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { MaxUint256 } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import { parseEther, parseUnits } from '@ethersproject/units'
-import { JSBI, Percent, Price, Route, Token, TokenAmount, WETH } from '@uniswap/sdk'
+import { JSBI, Percent, Price, Route, Token, TokenAmount, WCXS } from '@uniswap/sdk'
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -29,7 +29,7 @@ import { useTokenContract, useActiveWeb3React } from '../../hooks'
 
 import { useTokenByAddressAndAutomaticallyAdd } from '../../hooks/Tokens'
 import { useHasPendingApproval, useTransactionAdder } from '../../state/transactions/hooks'
-import { useTokenBalanceTreatingWETHasETH } from '../../state/wallet/hooks'
+import { useTokenBalanceTreatingWCXSasCXS } from '../../state/wallet/hooks'
 import { TYPE } from '../../theme'
 import { calculateGasMargin, calculateSlippageAmount, getRouterContract, isAddress } from '../../utils'
 import AppBody from '../AppBody'
@@ -177,8 +177,8 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
 
   // get user-pecific and token-specific lookup data
   const userBalances: { [field in Field]: TokenAmount } = {
-    [Field.INPUT]: useTokenBalanceTreatingWETHasETH(account, tokens[Field.INPUT]),
-    [Field.OUTPUT]: useTokenBalanceTreatingWETHasETH(account, tokens[Field.OUTPUT])
+    [Field.INPUT]: useTokenBalanceTreatingWCXSasCXS(account, tokens[Field.INPUT]),
+    [Field.OUTPUT]: useTokenBalanceTreatingWCXSasCXS(account, tokens[Field.OUTPUT])
   }
 
   // track non relational amounts if first person to add liquidity
@@ -247,12 +247,12 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
   const inputApproval: TokenAmount = useTokenAllowance(tokens[Field.INPUT], account, ROUTER_ADDRESS)
   const outputApproval: TokenAmount = useTokenAllowance(tokens[Field.OUTPUT], account, ROUTER_ADDRESS)
   const inputApproved =
-    tokens[Field.INPUT]?.equals(WETH[chainId]) ||
+    tokens[Field.INPUT]?.equals(WCXS[chainId]) ||
     (!!inputApproval &&
       !!parsedAmounts[Field.INPUT] &&
       JSBI.greaterThanOrEqual(inputApproval.raw, parsedAmounts[Field.INPUT].raw))
   const outputApproved =
-    tokens[Field.OUTPUT]?.equals(WETH[chainId]) ||
+    tokens[Field.OUTPUT]?.equals(WCXS[chainId]) ||
     (!!outputApproval &&
       !!parsedAmounts[Field.OUTPUT] &&
       JSBI.greaterThanOrEqual(outputApproval.raw, parsedAmounts[Field.OUTPUT].raw))
@@ -312,7 +312,7 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
     })
   }, [])
 
-  const MIN_ETHER: TokenAmount = new TokenAmount(WETH[chainId], JSBI.BigInt(parseEther('.01')))
+  const MIN_ETHER: TokenAmount = new TokenAmount(WCXS[chainId], JSBI.BigInt(parseEther('.01')))
 
   // get the max amounts user can add
   const [maxAmountInput, maxAmountOutput]: TokenAmount[] = [Field.INPUT, Field.OUTPUT].map(index => {
@@ -320,9 +320,9 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
     return !!userBalances[Field[field]] &&
       JSBI.greaterThan(
         userBalances[Field[field]].raw,
-        tokens[Field[field]]?.equals(WETH[chainId]) ? MIN_ETHER.raw : JSBI.BigInt(0)
+        tokens[Field[field]]?.equals(WCXS[chainId]) ? MIN_ETHER.raw : JSBI.BigInt(0)
       )
-      ? tokens[Field[field]]?.equals(WETH[chainId])
+      ? tokens[Field[field]]?.equals(WCXS[chainId])
         ? userBalances[Field[field]].subtract(MIN_ETHER)
         : userBalances[Field[field]]
       : undefined
@@ -406,11 +406,11 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
     let method, estimate, args, value
 
     // one of the tokens is ETH
-    if (tokens[Field.INPUT].equals(WETH[chainId]) || tokens[Field.OUTPUT].equals(WETH[chainId])) {
+    if (tokens[Field.INPUT].equals(WCXS[chainId]) || tokens[Field.OUTPUT].equals(WCXS[chainId])) {
       method = router.addLiquidityETH
       estimate = router.estimateGas.addLiquidityETH
 
-      const outputIsETH = tokens[Field.OUTPUT].equals(WETH[chainId])
+      const outputIsETH = tokens[Field.OUTPUT].equals(WCXS[chainId])
 
       args = [
         tokens[outputIsETH ? Field.INPUT : Field.OUTPUT].address, // token

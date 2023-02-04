@@ -1,4 +1,4 @@
-import { JSBI, TokenAmount, WETH } from '@uniswap/sdk'
+import { JSBI, TokenAmount, WCXS } from '@uniswap/sdk'
 import React, { useContext, useState } from 'react'
 import { ArrowDown } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -43,7 +43,7 @@ export default function Swap({ location: { search } }: RouteComponentProps) {
   const toggleWalletModal = useWalletModalToggle()
 
   const { independentField, typedValue } = useSwapState()
-  const { bestTrade, tokenBalances, parsedAmounts, tokens, error, v1TradeLinkIfBetter } = useDerivedSwapInfo()
+  const { bestTrade, tokenBalances, parsedAmounts, tokens, error } = useDerivedSwapInfo()
   const isValid = !error
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
 
@@ -79,12 +79,12 @@ export default function Swap({ location: { search } }: RouteComponentProps) {
   const maxAmountInput: TokenAmount =
     !!tokenBalances[Field.INPUT] &&
     !!tokens[Field.INPUT] &&
-    !!WETH[chainId] &&
+    !!WCXS[chainId] &&
     tokenBalances[Field.INPUT].greaterThan(
-      new TokenAmount(tokens[Field.INPUT], tokens[Field.INPUT].equals(WETH[chainId]) ? MIN_ETH : '0')
+      new TokenAmount(tokens[Field.INPUT], tokens[Field.INPUT].equals(WCXS[chainId]) ? MIN_ETH : '0')
     )
-      ? tokens[Field.INPUT].equals(WETH[chainId])
-        ? tokenBalances[Field.INPUT].subtract(new TokenAmount(WETH[chainId], MIN_ETH))
+      ? tokens[Field.INPUT].equals(WCXS[chainId])
+        ? tokenBalances[Field.INPUT].subtract(new TokenAmount(WCXS[chainId], MIN_ETH))
         : tokenBalances[Field.INPUT]
       : undefined
   const atMaxAmountInput: boolean =
@@ -292,7 +292,6 @@ export default function Swap({ location: { search } }: RouteComponentProps) {
                 </Text>
               </ButtonError>
             )}
-            <V1TradeLink v1TradeLinkIfBetter={v1TradeLinkIfBetter} />
           </BottomGrouping>
           {bestTrade && (
             <AdvancedSwapDetailsDropdown

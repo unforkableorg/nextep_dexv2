@@ -1,21 +1,21 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
-import { WETH, TokenAmount, JSBI, ChainId } from '@uniswap/sdk'
+import { WCXS, TokenAmount, JSBI, ChainId } from '@uniswap/sdk'
 import { useMemo } from 'react'
 import { useTransactionAdder } from '../state/transactions/hooks'
-import { useTokenBalanceTreatingWETHasETH } from '../state/wallet/hooks'
+import { useTokenBalanceTreatingWCXSasCXS } from '../state/wallet/hooks'
 
 import { calculateGasMargin, getSigner, isAddress } from '../utils'
 import { useENSName, useTokenContract, useActiveWeb3React } from './index'
 
-// returns a callback for sending a token amount, treating WETH as ETH
+// returns a callback for sending a token amount, treating WCXS as CXS
 // returns null with invalid arguments
 export function useSendCallback(amount?: TokenAmount, recipient?: string): null | (() => Promise<string>) {
   const { library, account, chainId } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
   const ensName = useENSName(recipient)
   const tokenContract = useTokenContract(amount?.token?.address)
-  const balance = useTokenBalanceTreatingWETHasETH(account ?? undefined, amount?.token)
+  const balance = useTokenBalanceTreatingWCXSasCXS(account ?? undefined, amount?.token)
 
   return useMemo(() => {
     if (!amount) return null
@@ -30,7 +30,7 @@ export function useSendCallback(amount?: TokenAmount, recipient?: string): null 
       if (!chainId || !library || !account || !tokenContract) {
         throw new Error('missing dependencies in onSend callback')
       }
-      if (token.equals(WETH[chainId as ChainId])) {
+      if (token.equals(WCXS[chainId as ChainId])) {
         return getSigner(library, account)
           .sendTransaction({ to: recipient, value: BigNumber.from(amount.raw.toString()) })
           .then((response: TransactionResponse) => {

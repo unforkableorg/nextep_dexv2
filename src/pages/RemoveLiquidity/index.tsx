@@ -1,7 +1,7 @@
 import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { parseUnits } from '@ethersproject/units'
-import { JSBI, Percent, Route, Token, TokenAmount, WETH } from '@uniswap/sdk'
+import { JSBI, Percent, Route, Token, TokenAmount, WCXS } from '@uniswap/sdk'
 import React, { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import { ArrowDown, Plus } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -433,8 +433,8 @@ export default function RemoveLiquidity({ match: { params } }: RouteComponentPro
 
     const router = getRouterContract(chainId, library, account)
 
-    const token0IsETH = tokens[Field.TOKEN0].equals(WETH[chainId])
-    const oneTokenIsETH = token0IsETH || tokens[Field.TOKEN1].equals(WETH[chainId])
+    const token0IsETH = tokens[Field.TOKEN0].equals(WCXS[chainId])
+    const oneTokenIsETH = token0IsETH || tokens[Field.TOKEN1].equals(WCXS[chainId])
 
     let estimate, method, args
     // we have approval, use normal remove liquidity
