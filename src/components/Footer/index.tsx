@@ -22,11 +22,9 @@ export default function Footer() {
 
   return (
     <FooterFrame>
-      <form action="https://forms.gle/DaLuqvJsVhVaAM3J9" target="_blank">
-        <ButtonSecondary p="8px 12px">
+        {/*<ButtonSecondary p="8px 12px">
           <Send size={16} style={{ marginRight: '8px' }} /> Feedback
-        </ButtonSecondary>
-      </form>
+        </ButtonSecondary>*/}
       <ButtonSecondary onClick={toggleDarkMode} p="8px 12px" ml="0.5rem" width="min-content">
         {darkMode ? <Sun size={16} /> : <Moon size={16} />}
       </ButtonSecondary>
