@@ -78,7 +78,7 @@ const Input = styled.input`
   background: none;
   border: none;
   outline: none;
-  border-radius: 20px;
+  border-radius: 0px;
   color: ${({ theme }) => theme.text1};
   border-style: solid;
   border: 1px solid ${({ theme }) => theme.bg3};
@@ -95,7 +95,7 @@ const FilterWrapper = styled(RowFixed)`
   padding: 8px;
   background-color: ${({ selected, theme }) => selected && theme.bg2};
   color: ${({ selected, theme }) => (selected ? theme.text1 : theme.text2)};
-  border-radius: 8px;
+  border-radius: 0px;
   user-select: none;
   & > * {
     user-select: none;
@@ -127,7 +127,7 @@ const MenuItem = styled(PaddedItem)`
 const BaseWrapper = styled(AutoRow)<{ disable?: boolean }>`
   border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.bg3)};
   padding: 0 6px;
-  border-radius: 10px;
+  border-radius: 0px;
   width: 120px;
 
   :hover {

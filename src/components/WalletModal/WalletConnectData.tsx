@@ -6,7 +6,7 @@ const QRCodeWrapper = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 0px;
   margin-bottom: 20px;
 `
 

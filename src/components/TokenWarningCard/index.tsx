@@ -19,7 +19,7 @@ const Wrapper = styled.div<{ error: boolean }>`
   position: relative;
   padding: 1rem;
   border: 0.5px solid ${({ theme, error }) => transparentize(0.4, error ? theme.red1 : theme.yellow1)};
-  border-radius: 10px;
+  border-radius: 0px;
   margin-bottom: 20px;
   display: grid;
   grid-template-rows: auto auto auto;

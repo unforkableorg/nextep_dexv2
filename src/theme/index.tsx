@@ -33,6 +33,11 @@ const mediaWidthTemplates: { [width in keyof typeof MEDIA_WIDTHS]: typeof css } 
 const white = '#FFFFFF'
 const black = '#000000'
 
+const nextep_brand1 = '#4b1f5e'
+const nextep_brand2 = '#c92aef'
+
+
+
 export function colors(darkMode: boolean): Colors {
   return {
     // base
@@ -58,17 +63,17 @@ export function colors(darkMode: boolean): Colors {
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
 
     //primary colors
-    primary1: darkMode ? '#2172E5' : '#ff007a',
-    primary2: darkMode ? '#3680E7' : '#FF8CC3',
-    primary3: darkMode ? '#4D8FEA' : '#FF99C9',
+    primary1: nextep_brand1, // darkMode ? '#2172E5' : '#ff007a',
+    primary2: nextep_brand1, // darkMode ? '#3680E7' : '#FF8CC3',
+    primary3: nextep_brand2, // darkMode ? '#4D8FEA' : '#FF99C9',
     primary4: darkMode ? '#376bad70' : '#F6DDE8',
     primary5: darkMode ? '#153d6f70' : '#FDEAF1',
 
     // color text
-    primaryText1: darkMode ? '#6da8ff' : '#ff007a',
+    primaryText1: darkMode ? nextep_brand2 : nextep_brand1,
 
     // secondary colors
-    secondary1: darkMode ? '#2172E5' : '#ff007a',
+    secondary1: darkMode ? nextep_brand1 : nextep_brand2,
     secondary2: darkMode ? '#17000b26' : '#F6DDE8',
     secondary3: darkMode ? '#17000b26' : '#FDEAF1',
 
@@ -168,9 +173,9 @@ export const TYPE = {
 
 export const FixedGlobalStyle = createGlobalStyle`
 @import url('https://rsms.me/inter/inter.css');
-html { font-family: 'Inter', sans-serif; letter-spacing: -0.018em;}
+html { font-family: 'Nunito', sans-serif; letter-spacing: -0.018em;}
 @supports (font-variation-settings: normal) {
-  html { font-family: 'Inter var', sans-serif; }
+  html { font-family: 'Nunito', sans-serif; }
 }
 
 html,
@@ -205,5 +210,8 @@ export const ThemedGlobalStyle = createGlobalStyle`
 html {
   color: ${({ theme }) => theme.text1};
   background-color: ${({ theme }) => theme.bg2};
+  background-image: url(https://www.nextepcrypto.fr/wp-content/uploads/2022/11/connectwork.webp);
+  background-size: auto;
+  background-repeat: repeat;
 }
 `

@@ -11,7 +11,7 @@ import { getEtherscanLink } from '../../utils'
 const InputPanel = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap}
   position: relative;
-  border-radius: 1.25rem;
+  border-radius: 0rem;
   background-color: ${({ theme }) => theme.bg1};
   z-index: 1;
   width: 100%;
@@ -21,7 +21,7 @@ const ContainerRow = styled.div<{ error: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 1.25rem;
+  border-radius: 0rem;
   border: 1px solid ${({ error, theme }) => (error ? theme.red1 : theme.bg2)};
   background-color: ${({ theme }) => theme.bg1};
 `
