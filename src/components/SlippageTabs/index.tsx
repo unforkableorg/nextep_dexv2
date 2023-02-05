@@ -23,7 +23,7 @@ const FancyButton = styled.button`
   align-items: center;
   min-width: 55px;
   height: 2rem;
-  border-radius: 36px;
+  border-radius: 0px;
   font-size: 12px;
   border: 1px solid ${({ theme }) => theme.bg3};
   outline: none;
@@ -81,7 +81,7 @@ const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }
     width: 100%;
     height: 100%;
     border: 0px;
-    border-radius: 2rem;
+    border-radius: 0rem;
   }
 `
 

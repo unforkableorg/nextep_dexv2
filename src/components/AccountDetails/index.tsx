@@ -105,7 +105,6 @@ const GreenCircle = styled.div`
     margin-left: 12px;
     margin-right: 2px;
     background-color: ${({ theme }) => theme.green1};
-    border-radius: 50%;
   }
 `
 
@@ -122,8 +121,8 @@ const LowerSection = styled.div`
   flex-grow: 1;
   overflow: auto;
   background-color: ${({ theme }) => theme.bg2};
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 
   h5 {
     margin: 0;

@@ -406,7 +406,7 @@ function SearchModal({
             <ButtonPrimary
               padding={'6px 8px'}
               width={'fit-content'}
-              borderRadius={'12px'}
+              borderRadius={'0px'}
               onClick={() => {
                 history.push('/add/' + token0.address + '-' + token1.address)
                 onDismiss()

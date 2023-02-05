@@ -49,7 +49,7 @@ const GreenCircle = styled.div`
     width: 8px;
     margin-right: 8px;
     background-color: ${({ theme }) => theme.green1};
-    border-radius: 50%;
+    border-radius: 0%;
   }
 `
 

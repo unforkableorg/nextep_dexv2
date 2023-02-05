@@ -36,8 +36,8 @@ export const AdvancedDropwdown = styled.div`
   margin-bottom: 100px;
   padding: 10px 0;
   padding-top: 36px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
   color: ${({ theme }) => theme.text2};
   background-color: ${({ theme }) => theme.advancedBG};
   color: ${({ theme }) => theme.text2};
@@ -80,7 +80,7 @@ export const StyledBalanceMaxMini = styled.button<{ active?: boolean }>`
   width: 22px;
   background-color: ${({ theme }) => theme.bg2};
   border: none;
-  border-radius: 50%;
+  border-radius: 0%;
   padding: 0.2rem;
   font-size: 0.875rem;
   font-weight: 400;

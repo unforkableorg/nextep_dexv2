@@ -105,7 +105,7 @@ export default function Pool({ history }: RouteComponentProps) {
           </AutoColumn>
           <FixedBottom>
             <ColumnCenter>
-              <ButtonSecondary width="136px" padding="8px" borderRadius="10px" onClick={() => history.push('/create')}>
+              <ButtonSecondary width="136px" padding="8px" borderRadius="0px" onClick={() => history.push('/create')}>
                 + Create Pool
               </ButtonSecondary>
             </ColumnCenter>

@@ -507,7 +507,7 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
           </ColumnCenter>
         </LightCard>
         <TYPE.body>Starting pool prices</TYPE.body>
-        <LightCard borderRadius="20px">
+        <LightCard borderRadius="0px">
           <TYPE.mediumHeader>
             {parsedAmounts[0] &&
               parsedAmounts[1] &&
@@ -517,7 +517,7 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
             {tokens[Field.INPUT]?.symbol + '/' + tokens[Field.OUTPUT]?.symbol}
           </TYPE.mediumHeader>
         </LightCard>
-        <LightCard borderRadius="20px">
+        <LightCard borderRadius="0px">
           <TYPE.mediumHeader>
             {parsedAmounts[0] &&
               parsedAmounts[1] &&
@@ -726,13 +726,13 @@ export default function AddLiquidity({ match: { params } }: RouteComponentProps<
           />
           {tokens[Field.OUTPUT] && tokens[Field.INPUT] && (
             <>
-              <GreyCard padding="0px" borderRadius={'20px'}>
+              <GreyCard padding="0px" borderRadius={'0px'}>
                 <RowBetween padding="1rem">
                   <TYPE.subHeader fontWeight={500} fontSize={14}>
                     {noLiquidity ? 'Initial prices' : 'Prices'} and pool share
                   </TYPE.subHeader>
                 </RowBetween>{' '}
-                <LightCard padding="1rem" borderRadius={'20px'}>
+                <LightCard padding="1rem" borderRadius={'0px'}>
                   <PriceBar />
                 </LightCard>
               </GreyCard>
