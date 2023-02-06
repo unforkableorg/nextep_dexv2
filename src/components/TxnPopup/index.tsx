@@ -62,7 +62,7 @@ export default function TxnPopup({
         <TYPE.body fontWeight={500}>
           {summary ? summary : 'Hash: ' + hash.slice(0, 8) + '...' + hash.slice(58, 65)}
         </TYPE.body>
-        <Link href={getEtherscanLink(chainId, hash, 'transaction')}>View on Etherscan</Link>
+        <Link href={getEtherscanLink(chainId, hash, 'transaction')}>View on nxchainscan</Link>
       </AutoColumn>
       <Fader count={count} />
     </AutoRow>

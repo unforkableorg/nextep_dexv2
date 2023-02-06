@@ -208,9 +208,6 @@ export default function Header() {
             ) : null}
             <Web3Status />
           </AccountElement>
-          <div style={{ pointerEvents: 'auto' }}>
-            <Menu />
-          </div>
         </HeaderElement>
       </RowBetween>
     </HeaderFrame>

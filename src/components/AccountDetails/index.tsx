@@ -357,7 +357,7 @@ export default function AccountDetails({
                   <>
                     <AccountControl hasENS={!!ENSName} isENS={false}>
                       <StyledLink hasENS={!!ENSName} isENS={true} href={getEtherscanLink(chainId, ENSName, 'address')}>
-                        View on Etherscan ↗
+                        View on nxchainscan ↗
                       </StyledLink>
                     </AccountControl>
                   </>
@@ -365,7 +365,7 @@ export default function AccountDetails({
                   <>
                     <AccountControl hasENS={!!ENSName} isENS={false}>
                       <StyledLink hasENS={!!ENSName} isENS={false} href={getEtherscanLink(chainId, account, 'address')}>
-                        View on Etherscan ↗
+                        View on nxchainscan ↗
                       </StyledLink>
                     </AccountControl>
                   </>

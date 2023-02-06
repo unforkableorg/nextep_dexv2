@@ -4,10 +4,10 @@ import { isAddress } from '../../utils'
 import { useActiveWeb3React } from '../../hooks'
 import { WCXS } from '@uniswap/sdk'
 
-import { ReactComponent as EthereumLogo } from '../../assets/images/ethereum-logo.svg'
+import { ReactComponent as EthereumLogo } from '../../assets/images/cxs-logo.svg'
 
 const TOKEN_ICON_API = address =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+  `https://raw.githubusercontent.com/NEXTEP-CXS/assets/master/blockchains/ethereum/assets/${address}/logo.png`
 const BAD_IMAGES = {}
 
 const Image = styled.img<{ size: string }>`
