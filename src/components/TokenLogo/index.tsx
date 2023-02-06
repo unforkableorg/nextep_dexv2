@@ -7,7 +7,7 @@ import { WCXS } from '@uniswap/sdk'
 import { ReactComponent as EthereumLogo } from '../../assets/images/cxs-logo.svg'
 
 const TOKEN_ICON_API = address =>
-  `https://raw.githubusercontent.com/NEXTEP-CXS/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+  `https://github.com/NEXTEP-CXS/nextep_dexv2/raw/nextep_dex/src/assets/${address}/logo.png`
 const BAD_IMAGES = {}
 
 const Image = styled.img<{ size: string }>`
