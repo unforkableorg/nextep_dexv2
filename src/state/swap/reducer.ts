@@ -30,7 +30,7 @@ function parseCurrencyFromURLParameter(urlParam: any, chainId: number): string {
   if (typeof urlParam === 'string') {
     const valid = isAddress(urlParam)
     if (valid) return valid
-    if (urlParam.toLowerCase() === 'eth') return WCXS[chainId as ChainId]?.address ?? ''
+    if (urlParam.toLowerCase() === 'cxs') return WCXS[chainId as ChainId]?.address ?? ''
     if (valid === false) return WCXS[chainId as ChainId]?.address ?? ''
   }
 

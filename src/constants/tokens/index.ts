@@ -11,7 +11,7 @@ export const ALL_TOKENS: AllTokens = [
   ...MAINNET_TOKENS,
   ...TESTNET_TOKENS
 ]
-  // remap WCXS to ETH
+  // remap WCXS to CXS
   .map(token => {
     if (token.equals(WCXS[token.chainId])) {
       ;(token as any).symbol = 'CXS'

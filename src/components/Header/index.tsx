@@ -203,7 +203,7 @@ export default function Header() {
           <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
             {account && userEthBalance ? (
               <Text style={{ flexShrink: 0 }} px="0.5rem" fontWeight={500}>
-                {userEthBalance?.toSignificant(4)} ETH
+                {userEthBalance?.toSignificant(4)} CXS
               </Text>
             ) : null}
             <Web3Status />
