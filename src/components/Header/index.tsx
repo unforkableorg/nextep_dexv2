@@ -5,12 +5,10 @@ import styled from 'styled-components'
 import { useTokenBalanceTreatingWCXSasCXS } from '../../state/wallet/hooks'
 
 import Row from '../Row'
-import Menu from '../Menu'
 import Web3Status from '../Web3Status'
 
-import { Link } from '../../theme'
 import { Text } from 'rebass'
-import { WCXS, ChainId } from '@uniswap/sdk'
+import { WCXS, ChainId, Token } from '@uniswap/sdk'
 import { isMobile } from 'react-device-detect'
 import { YellowCard } from '../Card'
 import { useActiveWeb3React } from '../../hooks'
@@ -22,6 +20,8 @@ import Wordmark from '../../assets/images/LOGO-NEXTEP.png'
 import WordmarkDark from '../../assets/images/LOGO-NEXTEP.png'
 import { AutoColumn } from '../Column'
 import { RowBetween } from '../Row'
+import { useTokenPrices } from '../../state/application/hooks'
+import { usePair } from '../../data/Reserves'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -154,6 +154,17 @@ export default function Header() {
 
   const userEthBalance = useTokenBalanceTreatingWCXSasCXS(account, WCXS[chainId])
   const [isDark] = useDarkModeManager()
+  const prices = useTokenPrices();
+  const pairBetween = usePair(new Token(chainId,"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",18,"CXS","CXS" ), new Token(chainId, "0x0000000000000000000000000000000000001112", 18, "NEXTEP", "NEXTEP"));
+
+  let nextepPrice = "?";
+  if(pairBetween) {
+    const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
+    console.log(pairBetween.reserve1.toExact(), pairBetween.reserve0.toExact())
+    nextepPrice = "$" + (parseFloat(pairBetween.reserve1.toExact()) / parseFloat(pairBetween.reserve0.toExact()) * cxsPrice).toLocaleString('fr', {maximumFractionDigits: 4});
+  }
+    
+  const cxsPrice = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
 
   return (
     <HeaderFrame>
@@ -197,6 +208,12 @@ export default function Header() {
           </TestnetWrapper>
         </HeaderElement>
         <HeaderElement>
+        <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+            <Text style={{ flexShrink: 0, margin: "8px" }} px="0.5rem" fontWeight={500}>CXS {cxsPrice}</Text>
+            <Text style={{ flexShrink: 0, margin: "8px" }} px="0.5rem" fontWeight={500}>NEXTEP {nextepPrice}</Text>
+          </AccountElement>
+        </HeaderElement>
+        <HeaderElement>
           <TestnetWrapper>
             {!isMobile && chainId === ChainId.TESTNET && <NetworkCard>Testnet</NetworkCard>}
           </TestnetWrapper>
@@ -213,3 +230,4 @@ export default function Header() {
     </HeaderFrame>
   )
 }
+

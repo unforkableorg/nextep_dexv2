@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDebounce, useActiveWeb3React } from '../../hooks'
-import { updateBlockNumber } from './actions'
+import { updateBlockNumber, updatePrices } from './actions'
 import { useDispatch } from 'react-redux'
 
 export default function Updater() {
@@ -40,6 +40,17 @@ export default function Updater() {
     if (!chainId || !debouncedMaxBlockNumber) return
     dispatch(updateBlockNumber({ chainId, blockNumber: debouncedMaxBlockNumber }))
   }, [chainId, debouncedMaxBlockNumber, dispatch])
+
+  // update token prices
+  useEffect(() => {
+    fetch('https://api.lbkex.com/v1/ticker.do?symbol=cxs_usdt')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.ticker.latest) }));
+    });
+  }, [dispatch])
 
   return null
 }

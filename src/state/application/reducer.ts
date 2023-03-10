@@ -1,5 +1,5 @@
 import { createReducer, nanoid } from '@reduxjs/toolkit'
-import { addPopup, PopupContent, removePopup, toggleWalletModal, updateBlockNumber } from './actions'
+import { addPopup, PopupContent, removePopup, toggleWalletModal, updateBlockNumber, updatePrices } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent }>
 
@@ -7,12 +7,14 @@ interface ApplicationState {
   blockNumber: { [chainId: number]: number }
   popupList: PopupList
   walletModalOpen: boolean
+  tokenPrices: any
 }
 
 const initialState: ApplicationState = {
   blockNumber: {},
   popupList: [],
-  walletModalOpen: false
+  walletModalOpen: false,
+  tokenPrices: {}
 }
 
 export default createReducer(initialState, builder =>
@@ -24,6 +26,10 @@ export default createReducer(initialState, builder =>
       } else {
         state.blockNumber[chainId] = Math.max(blockNumber, state.blockNumber[chainId])
       }
+    })
+    .addCase(updatePrices, (state, action) => {
+      const { symbol, value } = action.payload
+      state.tokenPrices[symbol] = value;
     })
     .addCase(toggleWalletModal, state => {
       state.walletModalOpen = !state.walletModalOpen

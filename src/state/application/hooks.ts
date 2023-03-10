@@ -10,6 +10,14 @@ export function useBlockNumber(): number | undefined {
   return useSelector((state: AppState) => state.application.blockNumber[chainId ?? -1])
 }
 
+export function useTokenPricesLocal(): any {
+  return useSelector((state: AppState) => state.application)
+}
+
+export function useTokenPrices(): any {
+  return useSelector((state: AppState) => state.application.tokenPrices)
+}
+
 export function useWalletModalOpen(): boolean {
   return useSelector((state: AppState) => state.application.walletModalOpen)
 }

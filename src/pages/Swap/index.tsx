@@ -19,18 +19,17 @@ import { ArrowWrapper, BottomGrouping, Dots, Wrapper } from '../../components/sw
 import SwapModalFooter from '../../components/swap/SwapModalFooter'
 import SwapModalHeader from '../../components/swap/SwapModalHeader'
 import TradePrice from '../../components/swap/TradePrice'
-import V1TradeLink from '../../components/swap/V1TradeLink'
 import { TokenWarningCards } from '../../components/TokenWarningCard'
 import { DEFAULT_DEADLINE_FROM_NOW, INITIAL_ALLOWED_SLIPPAGE, MIN_ETH } from '../../constants'
 import { useActiveWeb3React } from '../../hooks'
 import { useApproveCallbackFromTrade, ApprovalState } from '../../hooks/useApproveCallback'
 import { useSwapCallback } from '../../hooks/useSwapCallback'
-import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/swap/actions'
 import { useDefaultsFromURL, useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from '../../state/swap/hooks'
 import { CursorPointer, TYPE } from '../../theme'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown, warningServerity } from '../../utils/prices'
 import AppBody from '../AppBody'
+import { useWalletModalToggle } from '../../state/application/hooks'
 
 export default function Swap({ location: { search } }: RouteComponentProps) {
   useDefaultsFromURL(search)

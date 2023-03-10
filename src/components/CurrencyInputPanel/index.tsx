@@ -16,6 +16,7 @@ import { ReactComponent as DropDown } from '../../assets/images/dropdown.svg'
 
 import { useActiveWeb3React } from '../../hooks'
 import { useTranslation } from 'react-i18next'
+import { useTokenPricesLocal } from '../../state/application/hooks'
 
 const InputRow = styled.div<{ selected: boolean }>`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -163,6 +164,13 @@ export default function CurrencyInputPanel({
   const { account } = useActiveWeb3React()
   const userTokenBalance = useTokenBalanceTreatingWCXSasCXS(account, token)
   const theme = useContext(ThemeContext)
+  const { tokenPrices } = useTokenPricesLocal();
+
+  let totalValue = null;
+  if(token && token.symbol) {
+    if(tokenPrices && tokenPrices[token.symbol] && value != "")
+      totalValue = (tokenPrices[token.symbol] * parseFloat(value)).toLocaleString("fr", {maximumFractionDigits: 2});
+  }
 
   return (
     <InputPanel id={id}>
@@ -238,6 +246,7 @@ export default function CurrencyInputPanel({
             </Aligner>
           </CurrencySelect>
         </InputRow>
+        {totalValue && <label>${totalValue}</label>}
       </Container>
       {!disableTokenSelect && (
         <SearchModal

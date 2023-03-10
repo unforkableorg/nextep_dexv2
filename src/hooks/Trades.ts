@@ -35,6 +35,7 @@ export function useTradeExactIn(amountIn?: TokenAmount, tokenOut?: Token): Trade
   const outputToken = tokenOut
 
   const allowedPairs = useAllCommonPairs(inputToken, outputToken)
+  console.log("allowed", allowedPairs)
 
   return useMemo(() => {
     if (amountIn && tokenOut && allowedPairs.length > 0) {
