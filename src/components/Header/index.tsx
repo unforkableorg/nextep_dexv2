@@ -22,6 +22,8 @@ import { AutoColumn } from '../Column'
 import { RowBetween } from '../Row'
 import { useTokenPrices } from '../../state/application/hooks'
 import { usePair } from '../../data/Reserves'
+import { updatePrices } from '../../state/application/actions'
+import { useDispatch } from 'react-redux'
 
 const HeaderFrame = styled.div`
   display: flex;
@@ -151,6 +153,7 @@ const VersionToggle = styled.a`
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
+  const dispatch = useDispatch();
 
   const userEthBalance = useTokenBalanceTreatingWCXSasCXS(account, WCXS[chainId])
   const [isDark] = useDarkModeManager()
@@ -160,8 +163,10 @@ export default function Header() {
   let nextepPrice = "?";
   if(pairBetween) {
     const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
-    console.log(pairBetween.reserve1.toExact(), pairBetween.reserve0.toExact())
-    nextepPrice = "$" + (parseFloat(pairBetween.reserve1.toExact()) / parseFloat(pairBetween.reserve0.toExact()) * cxsPrice).toLocaleString('fr', {maximumFractionDigits: 4});
+    const price = parseFloat(pairBetween.reserve1.toExact()) / parseFloat(pairBetween.reserve0.toExact()) * cxsPrice;
+    nextepPrice = "$" + price.toLocaleString('fr', {maximumFractionDigits: 4});
+    // using small hack here to set manually the nextep price, not ideal
+    dispatch(updatePrices({ symbol: 'NEXTEP', value: price }))
   }
     
   const cxsPrice = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
