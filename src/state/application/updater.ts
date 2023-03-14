@@ -48,7 +48,8 @@ export default function Updater() {
       return response.json();
     })
     .then(function(json) {
-      dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.ticker.latest) }));
+      if(json.result)
+      dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.data[0].ticker.latest) }));
     });
   }, [dispatch])
 
