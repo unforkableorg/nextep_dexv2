@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 import { useDebounce, useActiveWeb3React } from '../../hooks'
 import { updateBlockNumber, updatePrices } from './actions'
 import { useDispatch } from 'react-redux'
+import { usePair } from '../../data/Reserves'
+import { Token } from '@uniswap/sdk'
+import { useTokenPrices } from './hooks'
 
 export default function Updater() {
   const { library, chainId } = useActiveWeb3React()
   const dispatch = useDispatch()
+  const tokenPrices = useTokenPrices();
 
   const [maxBlockNumber, setMaxBlockNumber] = useState<number | null>(null)
+  const pairBetween = usePair(new Token(chainId? chainId: 785,"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 18, "CXS", "CXS" ), new Token(chainId? chainId: 785, "0x0000000000000000000000000000000000001112", 18, "NEXTEP", "NEXTEP"))
   // because blocks arrive in bunches with longer polling periods, we just want
   // to process the latest one.
   const debouncedMaxBlockNumber = useDebounce<number | null>(maxBlockNumber, 100)
@@ -41,17 +46,26 @@ export default function Updater() {
     dispatch(updateBlockNumber({ chainId, blockNumber: debouncedMaxBlockNumber }))
   }, [chainId, debouncedMaxBlockNumber, dispatch])
 
-  // update token prices
+  // update CXS price
   useEffect(() => {
+    if (!chainId) return
     fetch('https://yls75hawkfxwckvlyzeczup4zq0myxer.lambda-url.us-east-1.on.aws/')
     .then(function(response) {
       return response.json();
     })
     .then(function(json) {
-      if(json.result)
-      dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.data[0].ticker.latest) }));
+      if(json.result) {
+        dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.data[0].ticker.latest) }));
+      }
     });
-  }, [dispatch])
+  }, [dispatch, chainId, pairBetween])
+
+  // update NEXTEP price based on CXS price
+  useEffect(() => {
+    if (!chainId || !pairBetween || !tokenPrices['CXS']) return
+    const price = parseFloat(pairBetween.reserve1.toExact()) / parseFloat(pairBetween.reserve0.toExact()) * tokenPrices['CXS'];
+    dispatch(updatePrices({ symbol: 'NEXTEP', value: price }));
+  }, [dispatch, chainId, pairBetween, tokenPrices])
 
   return null
 }

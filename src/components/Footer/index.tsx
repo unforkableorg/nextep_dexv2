@@ -25,9 +25,9 @@ export default function Footer() {
         {/*<ButtonSecondary p="8px 12px">
           <Send size={16} style={{ marginRight: '8px' }} /> Feedback
         </ButtonSecondary>*/}
-      <ButtonSecondary onClick={toggleDarkMode} p="8px 12px" ml="0.5rem" width="min-content">
+      {/* <ButtonSecondary onClick={toggleDarkMode} p="8px 12px" ml="0.5rem" width="min-content">
         {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-      </ButtonSecondary>
+      </ButtonSecondary> */}
     </FooterFrame>
   )
 }

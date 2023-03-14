@@ -33,6 +33,7 @@ const HeaderFrame = styled.div`
   width: 100%;
   top: 0;
   position: absolute;
+  background: #1f1f1f;
 
   pointer-events: none;
 
@@ -97,60 +98,6 @@ const NetworkCard = styled(YellowCard)`
   padding: 8px 12px;
 `
 
-const UniIcon = styled(HistoryLink)<{ to: string }>`
-  transition: transform 0.3s ease;
-  :hover {
-    transform: rotate(-5deg);
-  }
-`
-
-const MigrateBanner = styled(AutoColumn)`
-  width: 100%;
-  padding: 12px 0;
-  display: flex;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.primary5};
-  color: ${({ theme }) => theme.primaryText1};
-  font-weight: 400;
-  text-align: center;
-  pointer-events: auto;
-  a {
-    color: ${({ theme }) => theme.primaryText1};
-  }
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    padding: 0;
-    display: none;
-  `};
-`
-
-const VersionLabel = styled.span<{ isV2?: boolean }>`
-  padding: ${({ isV2 }) => (isV2 ? '0.15rem 0.5rem 0.16rem 0.45rem' : '0.15rem 0.5rem 0.16rem 0.35rem')};
-  border-radius: 0px;
-  background: ${({ theme, isV2 }) => (isV2 ? theme.primary1 : 'none')};
-  color: ${({ theme, isV2 }) => (isV2 ? theme.white : theme.primary1)};
-  font-size: 0.825rem;
-  font-weight: 400;
-  :hover {
-    user-select: ${({ isV2 }) => (isV2 ? 'none' : 'initial')};
-    background: ${({ theme, isV2 }) => (isV2 ? theme.primary1 : 'none')};
-    color: ${({ theme, isV2 }) => (isV2 ? theme.white : theme.primary3)};
-  }
-`
-
-const VersionToggle = styled.a`
-  border-radius: 0px;
-  border: 1px solid ${({ theme }) => theme.primary1};
-  color: ${({ theme }) => theme.primary1};
-  display: flex;
-  width: fit-content;
-  cursor: pointer;
-  text-decoration: none;
-  :hover {
-    text-decoration: none;
-  }
-`
-
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
   const dispatch = useDispatch();
@@ -158,18 +105,12 @@ export default function Header() {
   const userEthBalance = useTokenBalanceTreatingWCXSasCXS(account, WCXS[chainId])
   const [isDark] = useDarkModeManager()
   const prices = useTokenPrices();
-  const pairBetween = usePair(new Token(chainId,"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",18,"CXS","CXS" ), new Token(chainId, "0x0000000000000000000000000000000000001112", 18, "NEXTEP", "NEXTEP"));
 
-  let nextepPrice = "?";
-  if(pairBetween) {
-    const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
-    const price = parseFloat(pairBetween.reserve1.toExact()) / parseFloat(pairBetween.reserve0.toExact()) * cxsPrice;
-    nextepPrice = "$" + price.toLocaleString('fr', {maximumFractionDigits: 4});
-    // using small hack here to set manually the nextep price, not ideal
-    dispatch(updatePrices({ symbol: 'NEXTEP', value: price }))
-  }
+  const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
+  const nextepPrice : number = prices['NEXTEP']? prices['NEXTEP'] : 0;
+  const nextepPricePretty = "$" + nextepPrice.toLocaleString('fr', {maximumFractionDigits: 8});
     
-  const cxsPrice = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
+  const cxsPricePretty = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
 
   return (
     <HeaderFrame>
@@ -203,6 +144,7 @@ export default function Header() {
               </TitleText>
             )}
           </Title>
+          
           <TestnetWrapper style={{ pointerEvents: 'auto' }}>
             {/*!isMobile && (
               <VersionToggle target="_self" href="https://v1.uniswap.exchange">
@@ -211,12 +153,14 @@ export default function Header() {
               </VersionToggle>
             )*/}
           </TestnetWrapper>
-        </HeaderElement>
-        <HeaderElement>
-        <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-            <Text style={{ flexShrink: 0, margin: "8px" }} px="0.5rem" fontWeight={500}>CXS {cxsPrice}</Text>
-            <Text style={{ flexShrink: 0, margin: "8px" }} px="0.5rem" fontWeight={500}>NEXTEP {nextepPrice}</Text>
-          </AccountElement>
+          <div>
+            <Text style={{ color: "#c92aef" }} px="0.5rem">CXS :</Text>
+            <Text style={{ color: "#c92aef" }} px="0.5rem">NEXTEP :</Text>
+          </div>
+          <div>
+            <Text px="0.5rem">{cxsPricePretty}</Text>
+            <Text px="0.5rem">{nextepPricePretty}</Text>
+          </div>
         </HeaderElement>
         <HeaderElement>
           <TestnetWrapper>

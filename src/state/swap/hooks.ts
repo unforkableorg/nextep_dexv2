@@ -98,8 +98,6 @@ export function useDerivedSwapInfo(): {
 
   const bestTrade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 
-  console.log("best", bestTrade)
-
   const parsedAmounts = {
     [Field.INPUT]: isExactIn ? amount : bestTrade?.inputAmount,
     [Field.OUTPUT]: isExactIn ? bestTrade?.outputAmount : amount
