@@ -43,7 +43,7 @@ export default function Updater() {
 
   // update token prices
   useEffect(() => {
-    fetch('https://api.lbkex.com/v1/ticker.do?symbol=cxs_usdt')
+    fetch('https://yls75hawkfxwckvlyzeczup4zq0myxer.lambda-url.us-east-1.on.aws/')
     .then(function(response) {
       return response.json();
     })
