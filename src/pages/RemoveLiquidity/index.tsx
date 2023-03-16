@@ -358,83 +358,24 @@ export default function RemoveLiquidity({ match: { params } }: RouteComponentPro
   // state for txn
   const addTransaction = useTransactionAdder()
   const [txHash, setTxHash] = useState()
-  const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number }>(null)
   const [attemptedRemoval, setAttemptedRemoval] = useState(false) // clicked confirm
   const [pendingConfirmation, setPendingConfirmation] = useState(true) // waiting for
 
   async function onAttemptToApprove() {
-    // try to gather a signature for permission
-    const nonce = await pairContract.nonces(account)
-    const deadlineForSignature: number = Math.ceil(Date.now() / 1000) + DEFAULT_DEADLINE_FROM_NOW
-
-    const EIP712Domain = [
-      { name: 'name', type: 'string' },
-      { name: 'version', type: 'string' },
-      { name: 'chainId', type: 'uint256' },
-      { name: 'verifyingContract', type: 'address' }
-    ]
-    const domain = {
-      name: 'Uniswap V2',
-      version: '1',
-      chainId: chainId,
-      verifyingContract: pair.liquidityToken.address
-    }
-    const Permit = [
-      { name: 'owner', type: 'address' },
-      { name: 'spender', type: 'address' },
-      { name: 'value', type: 'uint256' },
-      { name: 'nonce', type: 'uint256' },
-      { name: 'deadline', type: 'uint256' }
-    ]
-    const message = {
-      owner: account,
-      spender: ROUTER_ADDRESS,
-      value: parsedAmounts[Field.LIQUIDITY].raw.toString(),
-      nonce: nonce.toHexString(),
-      deadline: deadlineForSignature
-    }
-    const data = JSON.stringify({
-      types: {
-        EIP712Domain,
-        Permit
-      },
-      domain,
-      primaryType: 'Permit',
-      message
-    })
-
-    library
-      .send('eth_signTypedData_v4', [account, data])
-      .then(splitSignature)
-      .then(signature => {
-        setSignatureData({
-          v: signature.v,
-          r: signature.r,
-          s: signature.s,
-          deadline: deadlineForSignature
-        })
-      })
-      .catch(error => {
-        // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (error?.code !== 4001) {
-          approveCallback()
-        }
-      })
+    approveCallback();
   }
 
   function resetModalState() {
-    setSignatureData(null)
     setAttemptedRemoval(false)
     setPendingConfirmation(true)
   }
 
   async function onRemove() {
     setAttemptedRemoval(true)
-
     const router = getRouterContract(chainId, library, account)
 
     const token0IsETH = tokens[Field.TOKEN0].equals(WCXS[chainId])
-    const oneTokenIsETH = token0IsETH || tokens[Field.TOKEN1].equals(WCXS[chainId])
+    const oneTokenIsETH = /*token0IsETH || tokens[Field.TOKEN1].equals(WCXS[chainId])*/ false;
 
     let estimate, method, args
     // we have approval, use normal remove liquidity
@@ -464,44 +405,6 @@ export default function RemoveLiquidity({ match: { params } }: RouteComponentPro
           slippageAdjustedAmounts[Field.TOKEN1].raw.toString(),
           account,
           Math.ceil(Date.now() / 1000) + DEFAULT_DEADLINE_FROM_NOW
-        ]
-      }
-    }
-    // we have a signataure, use permit versions of remove liquidity
-    else if (signatureData !== null) {
-      // removeLiquidityETHWithPermit
-      if (oneTokenIsETH) {
-        estimate = router.estimateGas.removeLiquidityETHWithPermit
-        method = router.removeLiquidityETHWithPermit
-        args = [
-          tokens[token0IsETH ? Field.TOKEN1 : Field.TOKEN0].address,
-          parsedAmounts[Field.LIQUIDITY].raw.toString(),
-          slippageAdjustedAmounts[token0IsETH ? Field.TOKEN1 : Field.TOKEN0].raw.toString(),
-          slippageAdjustedAmounts[token0IsETH ? Field.TOKEN0 : Field.TOKEN1].raw.toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s
-        ]
-      }
-      // removeLiquidityETHWithPermit
-      else {
-        estimate = router.estimateGas.removeLiquidityWithPermit
-        method = router.removeLiquidityWithPermit
-        args = [
-          tokens[Field.TOKEN0].address,
-          tokens[Field.TOKEN1].address,
-          parsedAmounts[Field.LIQUIDITY].raw.toString(),
-          slippageAdjustedAmounts[Field.TOKEN0].raw.toString(),
-          slippageAdjustedAmounts[Field.TOKEN1].raw.toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s
         ]
       }
     } else {
@@ -611,15 +514,15 @@ export default function RemoveLiquidity({ match: { params } }: RouteComponentPro
         <RowBetween mt="1rem">
           <ButtonConfirmed
             onClick={onAttemptToApprove}
-            confirmed={approval === ApprovalState.APPROVED || signatureData !== null}
-            disabled={approval !== ApprovalState.NOT_APPROVED || signatureData !== null}
+            confirmed={approval === ApprovalState.APPROVED}
+            disabled={approval !== ApprovalState.NOT_APPROVED}
             mr="0.5rem"
             fontWeight={500}
             fontSize={20}
           >
             {approval === ApprovalState.PENDING ? (
               <Dots>Approving</Dots>
-            ) : approval === ApprovalState.APPROVED || signatureData !== null ? (
+            ) : approval === ApprovalState.APPROVED ? (
               'Approved'
             ) : (
               'Approve'
@@ -627,7 +530,7 @@ export default function RemoveLiquidity({ match: { params } }: RouteComponentPro
           </ButtonConfirmed>
 
           <ButtonPrimary
-            disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
+            disabled={!(approval === ApprovalState.APPROVED)}
             onClick={onRemove}
             ml="0.5rem"
           >
