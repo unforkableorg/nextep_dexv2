@@ -12,7 +12,7 @@ export default function Updater() {
   const tokenPrices = useTokenPrices();
 
   const [maxBlockNumber, setMaxBlockNumber] = useState<number | null>(null)
-  const pairBetween = usePair(new Token(chainId? chainId: 785,"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 18, "CXS", "CXS" ), new Token(chainId? chainId: 785, "0x0000000000000000000000000000000000001112", 18, "NEXTEP", "NEXTEP"))
+  const pairBetween = usePair(new Token(chainId? chainId: 785,"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", 18, "CXS", "CXS" ), new Token(chainId? chainId: 785, "0x432E4997060F2385Bdb32cDc8Be815C6b22a8a61", 18, "NEXTEP", "NEXTEP"))
   // because blocks arrive in bunches with longer polling periods, we just want
   // to process the latest one.
   const debouncedMaxBlockNumber = useDebounce<number | null>(maxBlockNumber, 100)
