@@ -22,16 +22,13 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: '16'
-
-      - name: Install yarn
-        run: npm install -g yarn
+          node-version: '12'
 
       - name: Install dependencies
-        run: yarn
+        run: npm ci
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Create GitHub Release
         id: create_release
