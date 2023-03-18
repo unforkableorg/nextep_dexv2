@@ -1,9 +1,9 @@
 name: Release
 on:
   push:
-    branches: [ master ]
+    branches: [ nextep_dex ]
   pull_request:
-    branches: [ master ]
+    branches: [ nextep_dex ]
 
 jobs:
   create-release:
