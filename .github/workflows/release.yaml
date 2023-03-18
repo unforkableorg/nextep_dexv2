@@ -1,8 +1,10 @@
 name: Release
-# every morning
 on:
-  schedule:
-    - cron:  '0 12 * * *'
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
   create-release:
     name: Create Release
@@ -32,18 +34,6 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Build the IPFS bundle
-        run: yarn ipfs-build
-
-      - name: Pin to IPFS
-        id: upload
-        uses: anantaramdas/ipfs-pinata-deploy-action@v1.5.2
-        with:
-          pin-name: Uniswap ${{ steps.bump_version.outputs.new_tag }}
-          path: './build'
-          pinata-api-key: ${{ secrets.PINATA_API_KEY }}
-          pinata-secret-api-key: ${{ secrets.PINATA_API_SECRET_KEY }}
-
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1.1.0
@@ -54,14 +44,5 @@ jobs:
           release_name: Release ${{ steps.bump_version.outputs.new_tag }}
           draft: false
           body: |
-            Release built from commit [`${{ github.sha }}`](https://github.com/Uniswap/uniswap-frontend/tree/${{ github.sha }})
-
-            The IPFS hash of the bundle is `${{ steps.upload.outputs.hash }}`
-
-            The following IPFS Gateways can be used to access the release:
-            - https://cloudflare-ipfs.com/ipfs/${{ steps.upload.outputs.hash }}/
-            - https://ipfs.infura.io/ipfs/${{ steps.upload.outputs.hash }}/
-            - https://ipfs.io/ipfs/${{ steps.upload.outputs.hash }}/
-            - https://dweb.link/ipfs/${{ steps.upload.outputs.hash }}/
-
+            Release built from commit [`${{ github.sha }}`](https://github.com/NEXTEP-CXS/nextep_dexv2/tree/${{ github.sha }})
             ${{ steps.bump_version.outputs.changelog }}
