@@ -20,10 +20,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: .*
 
-      - name: Cancel this build if no new commits
-        if: ${{ steps.bump_version.outputs.new_tag == null }}
-        uses: andymckay/cancel-action@0.2
-
       - uses: actions/setup-node@v1
         with:
           node-version: '16'
@@ -46,3 +42,9 @@ jobs:
           body: |
             Release built from commit [`${{ github.sha }}`](https://github.com/NEXTEP-CXS/nextep_dexv2/tree/${{ github.sha }})
             ${{ steps.bump_version.outputs.changelog }}
+
+      - name: Upload build files
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: dist/
