@@ -43,8 +43,10 @@ jobs:
             Release built from commit [`${{ github.sha }}`](https://github.com/NEXTEP-CXS/nextep_dexv2/tree/${{ github.sha }})
             ${{ steps.bump_version.outputs.changelog }}
 
-      - name: Upload build files
-        uses: actions/upload-artifact@v2
+      - name: Add built files to the release
+        uses: actions/upload-release-asset@v1.0.2
         with:
-          name: build
-          path: build/
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/
+          asset_name: build.zip
+          asset_content_type: application/zip
