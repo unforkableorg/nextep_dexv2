@@ -50,9 +50,10 @@ jobs:
           path: build/
 
       - name: Add built files to the release
-        uses: actions/upload-release-asset@v1.0.2
+        needs: create-release
+        uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/build.zip
-          asset_name: build.zip
+          asset_path: ./build
+          asset_name: build
           asset_content_type: application/zip
