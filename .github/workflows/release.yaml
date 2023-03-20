@@ -22,16 +22,13 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: '16'
-
-      - name: Install yarn
-        run: npm install -g yarn
+          node-version: '12'
 
       - name: Install dependencies
-        run: yarn
+        run: npm ci
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Create GitHub Release
         id: create_release
@@ -50,4 +47,18 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build
-          path: dist/
+          path: build/
+
+      # Since we have a directory, create a zip
+      - run: zip -r "build.zip" build/*
+
+      # Now upload the zip file
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: "${{ steps.create_release.outputs.upload_url }}"
+          asset_path: build.zip
+          asset_name: build.zip
+          asset_content_type: application/zip
