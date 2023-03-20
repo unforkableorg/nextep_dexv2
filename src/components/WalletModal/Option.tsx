@@ -128,9 +128,9 @@ export default function Option({
         </HeaderText>
         {subheader && <SubHeader>{subheader}</SubHeader>}
       </OptionCardLeft>
-      <IconWrapper size={size}>
+      {/* <IconWrapper size={size}>
         <img src={icon} alt={'Icon'} />
-      </IconWrapper>
+      </IconWrapper> */}
     </OptionCardClickable>
   )
   if (link) {
