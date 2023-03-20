@@ -49,12 +49,9 @@ jobs:
           name: build
           path: build/
 
-      - name: List contents of dist/ directory
-        run: ls build/
-
       - name: Upload Release Assets
         uses: alexellis/upload-assets@0.4.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_paths: '["./build/*"]'
+          asset_paths: '["build/*"]'
