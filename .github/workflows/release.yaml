@@ -50,7 +50,7 @@ jobs:
           path: build/
 
       # Since we have a directory, create a zip
-      - run: zip -r "build-${{steps.create_releaseTag.outputs.string}}.zip" build
+      - run: zip -r "build.zip" build/*
 
       # Now upload the zip file
       - name: Upload Release Asset
@@ -59,6 +59,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: "${{ steps.create_release.outputs.upload_url }}"
-          asset_path: build-${{steps.create_releaseTag.outputs.string}}.zip
-          asset_name: build-${{steps.create_releaseTag.outputs.string}}.zip
+          asset_path: build.zip
+          asset_name: build.zip
           asset_content_type: application/zip
