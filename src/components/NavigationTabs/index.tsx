@@ -17,11 +17,11 @@ const tabOrder = [
     textKey: 'swap',
     regex: /\/swap/
   },
-  {
-    path: '/send',
-    textKey: 'send',
-    regex: /\/send/
-  },
+  // {
+  //   path: '/send',
+  //   textKey: 'send',
+  //   regex: /\/send/
+  // },
   {
     path: '/pool',
     textKey: 'pool',
