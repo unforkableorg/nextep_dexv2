@@ -49,9 +49,16 @@ jobs:
           name: build
           path: build/
 
-      - name: Upload Release Assets
-        uses: alexellis/upload-assets@0.4.0
+      # Since we have a directory, create a zip
+      - run: zip -r "build-${{steps.create_releaseTag.outputs.string}}.zip" build
+
+      # Now upload the zip file
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          asset_paths: '["build/*"]'
+          upload_url: "${{ steps.create_release.outputs.upload_url }}"
+          asset_path: build-${{steps.create_releaseTag.outputs.string}}.zip
+          asset_name: build-${{steps.create_releaseTag.outputs.string}}.zip
+          asset_content_type: application/zip
