@@ -52,10 +52,9 @@ jobs:
       - name: List contents of dist/ directory
         run: ls build/
 
-      - name: Add built files to the release
-        uses: actions/upload-release-asset@v1
+      - name: Upload Release Assets
+        uses: alexellis/upload-assets@0.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/
-          asset_name: build
-          asset_content_type: application/zip
+          asset_paths: '["./build/*"]'
