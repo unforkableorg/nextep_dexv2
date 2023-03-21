@@ -160,7 +160,7 @@ const ConnectButtonRow = styled.div`
 `
 
 const StyledLink = styled(Link)<{ hasENS: boolean; isENS: boolean }>`
-  color: ${({ hasENS, isENS, theme }) => (hasENS ? (isENS ? theme.primary1 : theme.text3) : theme.primary1)};
+  color: ${({ hasENS, isENS, theme }) => (hasENS ? (isENS ? theme.text1 : theme.text3) : theme.text1)};
 `
 
 const CloseIcon = styled.div`

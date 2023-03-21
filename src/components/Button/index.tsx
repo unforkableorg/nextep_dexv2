@@ -156,7 +156,7 @@ export const ButtonOutlined = styled(Base as any)`
 
 export const ButtonEmpty = styled(Base as any)`
   background-color: transparent;
-  color: ${({ theme }) => theme.primary1};
+  color: ${({ theme }) => theme.text1};
   display: flex;
   justify-content: center;
   align-items: center;
