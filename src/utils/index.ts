@@ -23,7 +23,7 @@ export function isAddress(value: any): string | false {
 }
 
 const ETHERSCAN_PREFIXES: { [chainId in ChainId]: string } = {
-  785: '',
+  785: 'www.',
   786: 'testnet.'
 }
 
