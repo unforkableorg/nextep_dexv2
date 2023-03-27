@@ -49,15 +49,16 @@ export default function Updater() {
   // update CXS price
   useEffect(() => {
     if (!chainId) return
+
     fetch('https://yls75hawkfxwckvlyzeczup4zq0myxer.lambda-url.us-east-1.on.aws/')
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(json) {
+    .then(async function(response) {
+      const json = await  response.json();
       if(json.result) {
         dispatch(updatePrices({ symbol: 'CXS', value: parseFloat(json.data[0].ticker.latest) }));
       }
-    });
+    }).catch(err => {
+      console.log(err)
+    })
   }, [dispatch, chainId, pairBetween])
 
   // update NEXTEP price based on CXS price
