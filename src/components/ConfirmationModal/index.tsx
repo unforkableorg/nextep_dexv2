@@ -107,7 +107,7 @@ function ConfirmationModal({
               {!pendingConfirmation && (
                 <>
                   <Link href={getEtherscanLink(chainId, hash, 'transaction')}>
-                    <Text fontWeight={500} fontSize={14} color={theme.primary1}>
+                    <Text fontWeight={500} fontSize={14} color={theme.text1}>
                       View on nxchainscan
                     </Text>
                   </Link>
