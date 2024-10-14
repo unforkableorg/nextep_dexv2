@@ -133,7 +133,9 @@ export function useTokenBalancesTreatWCXSAsCXS(
     let includesWCXS = false
     const tokensWithoutWCXS = tokens.filter(t => {
       if (!chainId) return true
-      const isWCXS = t?.equals(WCXS[chainId as ChainId]) ?? false
+      const wcxs = WCXS[chainId as ChainId]
+      if(!wcxs) return true
+      const isWCXS = t?.equals(wcxs) ?? false
       if (isWCXS) includesWCXS = true
       return !isWCXS
     })

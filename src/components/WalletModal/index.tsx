@@ -293,6 +293,39 @@ export default function WalletModal({
   }
 
   function getModalContent() {
+    const switchToCorrectNetwork = async () => {
+      try {
+        await (window as any).ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0x311' }], // Change '0x311' to the chainId you want (785)
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          try {
+            await (window as any).ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainId: '0x311', // Chain ID in hex (785)
+                  chainName: 'NXCHAIN Mainnet',
+                  nativeCurrency: {
+                    name: 'CXS',
+                    symbol: 'CXS',
+                    decimals: 18,
+                  },
+                  rpcUrls: ['https://rpc.nxchainscan.com/'],
+                  blockExplorerUrls: ['https://www.nxchainscan.com'],
+                },
+              ],
+            });
+          } catch (addError) {
+            console.error(addError);
+          }
+        }
+      }
+    };
+
     if (error) {
       return (
         <UpperSection>
@@ -302,7 +335,10 @@ export default function WalletModal({
           <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
             {error instanceof UnsupportedChainIdError ? (
+              <>
               <h5>Please connect to the appropriate Ethereum network.</h5>
+              <button onClick={switchToCorrectNetwork}>Switch to Correct Network</button>
+              </>
             ) : (
               'Error connecting. Try refreshing the page.'
             )}
