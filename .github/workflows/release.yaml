@@ -44,7 +44,7 @@ jobs:
             ${{ steps.bump_version.outputs.changelog }}
 
       - name: Upload build files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: build
           path: build/
