@@ -75,29 +75,30 @@ export default function Pool({ history }: RouteComponentProps) {
         <Positions>
           <AutoColumn gap="12px">
             <RowBetween padding={'0 8px'}>
-              <Text color={theme.text1} fontWeight={500}>
+              <Text color={"rgb(28, 15, 50)"} fontWeight={500}>
                 Your Pooled Liquidity
               </Text>
               <Question text="When you add liquidity, you are given pool tokens that represent your share. If you don’t see a pool you joined in this list, try importing a pool below." />
             </RowBetween>
             {filteredExchangeList?.length === 0 && (
-              <LightCard
+              <LightCard 
                 padding="40px
           "
               >
-                <TYPE.body color={theme.text3} textAlign="center">
+                <TYPE.body color={"rgb(28, 15, 50)"} textAlign="center">
                   No liquidity found.
                 </TYPE.body>
               </LightCard>
             )}
             {filteredExchangeList}
-            <Text textAlign="center" fontSize={14} style={{ padding: '.5rem 0 .5rem 0' }}>
+            <Text color={"rgb(28, 15, 50)"} textAlign="center" fontSize={14} style={{ padding: '.5rem 0 .5rem 0' }}>
               {filteredExchangeList?.length !== 0 ? `Don't see a pool you joined? ` : 'Already joined a pool? '}{' '}
               <Link
                 id="import-pool-link"
                 onClick={() => {
                   history.push('/find')
                 }}
+                style={{color: "rgb(190, 118, 255)"}}
               >
                 Import it.
               </Link>

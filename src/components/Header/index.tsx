@@ -15,9 +15,9 @@ import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 
 //import Logo from '../../assets/svg/logo.svg'
-import Wordmark from '../../assets/images/LOGO-NEXTEP.png'
+import Wordmark from '../../assets/images/LOGO-REVOPAID.png'
 //import LogoDark from '../../assets/svg/logo_white.svg'
-import WordmarkDark from '../../assets/images/LOGO-NEXTEP.png'
+import WordmarkDark from '../../assets/images/LOGO-REVOPAID.png'
 import { AutoColumn } from '../Column'
 import { RowBetween } from '../Row'
 import { useTokenPrices } from '../../state/application/hooks'
@@ -33,7 +33,8 @@ const HeaderFrame = styled.div`
   width: 100%;
   top: 0;
   position: absolute;
-  background: #1f1f1f;
+  background: white;
+  border-bottom: 1px solid rgb(28, 15, 50);
 
   pointer-events: none;
 
@@ -42,6 +43,7 @@ const HeaderFrame = styled.div`
     width: calc(100%);
     position: relative;
   `};
+
   z-index: 2;
 `
 
@@ -63,17 +65,16 @@ const Title = styled.div`
 const TitleText = styled(Row)`
   width: fit-content;
   white-space: nowrap;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+  @media (max-width: 650px) {
     display: none;
-  `};
+  }
 `
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
-  border-radius: 0px;
+  border-radius: 40px;
   white-space: nowrap;
 
   :focus {
@@ -154,19 +155,23 @@ export default function Header() {
             )*/}
           </TestnetWrapper>
           <div>
-            <Text style={{ color: "#c92aef" }} px="0.5rem">CXS :</Text>
-            <Text style={{ color: "#c92aef" }} px="0.5rem">NEXTEP :</Text>
+            <Text style={{ color: "rgb(190, 118, 255)" }} px="0.5rem">CXS :</Text>
+            <Text style={{ color: "rgb(190, 118, 255)" }} px="0.5rem">NEXTEP :</Text>
           </div>
           <div>
-            <Text px="0.5rem">{cxsPricePretty}</Text>
-            <Text px="0.5rem">{nextepPricePretty}</Text>
+            <Text style={{ color: "rgb(28, 15, 50)" }} px="0.5rem">{cxsPricePretty}</Text>
+            <Text style={{ color: "rgb(28, 15, 50)" }} px="0.5rem">{nextepPricePretty}</Text>
           </div>
         </HeaderElement>
         <HeaderElement>
           <TestnetWrapper>
             {!isMobile && chainId === ChainId.TESTNET && <NetworkCard>Testnet</NetworkCard>}
           </TestnetWrapper>
-          <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+          <AccountElement active={!!account} style={
+            { 
+              pointerEvents: 'auto'
+            }
+            }>
             {account && userEthBalance ? (
               <Text style={{ flexShrink: 0 }} px="0.5rem" fontWeight={500}>
                 {userEthBalance?.toSignificant(4)} CXS

@@ -29,19 +29,20 @@ const CurrencySelect = styled.button<{ selected: boolean }>`
   height: 2.2rem;
   font-size: 20px;
   font-weight: 500;
-  background-color: ${({ selected, theme }) => (selected ? theme.bg1 : theme.primary1)};
+  background-color: rgba(28, 15, 50, 0.6);
+  border-radius: 8px;
   color: ${({ selected, theme }) => (selected ? theme.text1 : theme.white)};
-  border-radius: 0px;
   box-shadow: ${({ selected }) => (selected ? 'none' : '0px 6px 10px rgba(0, 0, 0, 0.075)')};
   outline: none;
   cursor: pointer;
   user-select: none;
   border: none;
   padding: 0 0.5rem;
+  transition: background-color 350ms;
 
   :focus,
   :hover {
-    background-color: ${({ selected, theme }) => (selected ? theme.bg2 : darken(0.05, theme.primary1))};
+    background-color: rgb(28, 15, 50);
   }
 `
 
@@ -84,9 +85,9 @@ const InputPanel = styled.div<{ hideInput?: boolean }>`
 `
 
 const Container = styled.div<{ hideInput: boolean }>`
-  border-radius: ${({ hideInput }) => (hideInput ? '8px' : '20px')};
+  border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.bg2};
-  background-color: ${({ theme }) => theme.bg1};
+  background-color: white;
 `
 
 const StyledTokenName = styled.span<{ active?: boolean }>`
@@ -178,7 +179,7 @@ export default function CurrencyInputPanel({
         {!hideInput && (
           <LabelRow>
             <RowBetween>
-              <TYPE.body color={theme.text2} fontWeight={500} fontSize={14}>
+              <TYPE.body color={"rgb(28, 15, 50)"} fontWeight={500} fontSize={14}>
                 {label}
               </TYPE.body>
               {account && (

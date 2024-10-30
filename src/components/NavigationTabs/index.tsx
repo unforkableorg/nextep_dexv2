@@ -55,12 +55,14 @@ const StyledNavLink = styled(NavLink).attrs({
   &.${activeClassName} {
     border-radius: 0px;
     font-weight: 500;
-    color: ${({ theme }) => theme.text1};
+    color: rgb(28, 15, 50);
+    background-color: white;
+    border-radius: 8px;
   }
 
   :hover,
   :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
+    color: rgb(190, 118, 255);
   }
 `
 

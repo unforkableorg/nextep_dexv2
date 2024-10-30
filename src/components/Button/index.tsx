@@ -30,18 +30,24 @@ const Base = styled(RebassButton)<{ padding?: string; width?: string; borderRadi
 `
 
 export const ButtonPrimary = styled(Base as any)`
-  background-color: ${({ theme }) => theme.primary1};
-  color: white;
+  background-color: rgb(190, 118, 255);
+  color: rgb(28, 15, 50);
+  border-radius: 20px;
+  padding: 10px 24px;
+  transition: background-color 350ms;
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.05, theme.primary1)};
-    background-color: ${({ theme }) => darken(0.05, theme.primary1)};
+    background-color: rgb(28, 15, 50);
+    color: white;
   }
   &:hover {
-    background-color: ${({ theme }) => darken(0.05, theme.primary1)};
+    background-color: rgb(28, 15, 50);
+    color: white;
   }
   &:active {
     box-shadow: 0 0 0 1pt ${({ theme }) => darken(0.1, theme.primary1)};
-    background-color: ${({ theme }) => darken(0.1, theme.primary1)};
+    background-color: rgb(28, 15, 50);
+    color: white;
   }
   &:disabled {
     background-color: ${({ theme }) => theme.bg3};
@@ -52,10 +58,13 @@ export const ButtonPrimary = styled(Base as any)`
 `
 
 export const ButtonLight = styled(Base as any)`
-  background-color: ${({ theme }) => theme.primary5};
-  color: ${({ theme }) => theme.primaryText1};
+  background-color: white;
+  border: 1px solid rgb(28, 15, 50);
+  color: rgb(28, 15, 50);
+  border-radius: 20px;
   font-size: 16px;
   font-weight: 500;
+  transition: background-color 350ms;
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && darken(0.03, theme.primary5)};
     background-color: ${({ theme, disabled }) => !disabled && darken(0.03, theme.primary5)};
@@ -88,10 +97,12 @@ export const ButtonGray = styled(Base as any)`
 `
 
 export const ButtonSecondary = styled(Base as any)`
-  background-color: ${({ theme }) => theme.primary5};
-  color: ${({ theme }) => theme.primaryText1};
+  background-color: white;
+  color: rgb(28, 15, 50);
   font-size: 16px;
-  border-radius: 0px;
+  border-radius: 20px;
+  padding: 10px 24px;
+  transition: background-color 350ms;
   padding: ${({ padding }) => (padding ? padding : '10px')};
 
   &:focus {
