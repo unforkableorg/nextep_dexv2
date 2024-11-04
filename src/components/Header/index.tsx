@@ -14,7 +14,7 @@ import { YellowCard } from '../Card'
 import { useActiveWeb3React } from '../../hooks'
 import { useDarkModeManager } from '../../state/user/hooks'
 
-//import Logo from '../../assets/svg/logo.svg'
+import Logo from '../../assets/images/ICON-REVOPAID.png'
 import Wordmark from '../../assets/images/LOGO-REVOPAID.png'
 //import LogoDark from '../../assets/svg/logo_white.svg'
 import WordmarkDark from '../../assets/images/LOGO-REVOPAID.png'
@@ -128,11 +128,17 @@ export default function Header() {
       <RowBetween padding="1rem">
         <HeaderElement>
           <Title>
-            {/*
-            <UniIcon id="link" to="/">
-              <img src={isDark ? LogoDark : Logo} alt="logo" />
-            </UniIcon>
-            */}
+            {isMobile && (
+            <TitleText>
+            <HistoryLink id="link" to="/">
+              <img
+                style={{ height: '30px', marginLeft: '4px', marginTop: '4px' }}
+                src={Logo}
+                alt="logo"
+              />
+            </HistoryLink>
+          </TitleText>
+            )}
             {!isMobile && (
               <TitleText>
                 <HistoryLink id="link" to="/">
