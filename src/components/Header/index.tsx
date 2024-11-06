@@ -104,27 +104,8 @@ export default function Header() {
   const dispatch = useDispatch();
 
   const userEthBalance = useTokenBalanceTreatingWCXSasCXS(account, WCXS[chainId])
-  const [isDark] = useDarkModeManager()
-  const prices = useTokenPrices();
-
-  const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
-  const nextepPrice : number = prices['NEXTEP']? prices['NEXTEP'] : 0;
-  const nextepPricePretty = "$" + nextepPrice.toLocaleString('fr', {maximumFractionDigits: 8});
-    
-  const cxsPricePretty = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
-
   return (
     <HeaderFrame>
-      {/*<MigrateBanner>
-        <Link href="https://uniswap.org/blog/launch-uniswap-v2/">
-          <b>blog post ↗</b>
-        </Link>
-        &nbsp;or&nbsp;
-        <Link href="https://migrate.uniswap.exchange/">
-          <b>migrate your liquidity ↗</b>
-        </Link>
-        .
-      </MigrateBanner>*/}
       <RowBetween padding="1rem">
         <HeaderElement>
           <Title>
@@ -149,24 +130,7 @@ export default function Header() {
               </TitleText>
             )}
           </Title>
-          
-          <TestnetWrapper style={{ pointerEvents: 'auto' }}>
-            {/*!isMobile && (
-              <VersionToggle target="_self" href="https://v1.uniswap.exchange">
-                <VersionLabel isV2={true}>V2</VersionLabel>
-                <VersionLabel isV2={false}>V1</VersionLabel>
-              </VersionToggle>
-            )*/}
-          </TestnetWrapper>
-          <div>
-            <Text style={{ color: "rgb(190, 118, 255)" }} px="0.5rem">CXS :</Text>
-            <Text style={{ color: "rgb(190, 118, 255)" }} px="0.5rem">NEXTEP :</Text>
-          </div>
-          <div>
-            <Text style={{ color: "rgb(28, 15, 50)" }} px="0.5rem">{cxsPricePretty}</Text>
-            <Text style={{ color: "rgb(28, 15, 50)" }} px="0.5rem">{nextepPricePretty}</Text>
-          </div>
-        </HeaderElement>
+          </HeaderElement>
         <HeaderElement>
           <TestnetWrapper>
             {!isMobile && chainId === ChainId.TESTNET && <NetworkCard>Testnet</NetworkCard>}

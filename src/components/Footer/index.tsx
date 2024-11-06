@@ -4,30 +4,34 @@ import { Send, Sun, Moon } from 'react-feather'
 import { useDarkModeManager } from '../../state/user/hooks'
 
 import { ButtonSecondary } from '../Button'
+import { useTokenPrices } from '../../state/application/hooks'
+import { Text } from 'rebass'
 
 const FooterFrame = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   position: fixed;
-  right: 1rem;
   bottom: 1rem;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    display: none;
-  `};
+  width: 100%;
+  padding: 1rem;
+  background: ${({ theme }) => theme.bg1};
 `
 
 export default function Footer() {
-  const [darkMode, toggleDarkMode] = useDarkModeManager()
+
+  const prices = useTokenPrices();
+
+  const cxsPrice : number = prices['CXS']? prices['CXS'] : 0;
+  const nextepPrice : number = prices['NEXTEP']? prices['NEXTEP'] : 0;
+  const nextepPricePretty = "$" + nextepPrice.toLocaleString('fr', {maximumFractionDigits: 8});
+    
+  const cxsPricePretty = prices['CXS']? "$" + prices['CXS'].toLocaleString('fr', {maximumFractionDigits: 4}) : "?";
+
 
   return (
     <FooterFrame>
-        {/*<ButtonSecondary p="8px 12px">
-          <Send size={16} style={{ marginRight: '8px' }} /> Feedback
-        </ButtonSecondary>*/}
-      {/* <ButtonSecondary onClick={toggleDarkMode} p="8px 12px" ml="0.5rem" width="min-content">
-        {darkMode ? <Sun size={16} /> : <Moon size={16} />}
-      </ButtonSecondary> */}
+        <Text px="0.5rem">CXS: {cxsPricePretty} NEXTEP: {nextepPricePretty}</Text>
     </FooterFrame>
   )
 }
