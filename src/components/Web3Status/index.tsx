@@ -24,6 +24,7 @@ import { shortenAddress } from '../../utils'
 import { useAllTransactions } from '../../state/transactions/hooks'
 import { NetworkContextName } from '../../constants'
 import { injected, walletconnect, walletlink, fortmatic, portis } from '../../connectors'
+import { isMobile } from 'react-device-detect'
 
 const SpinnerWrapper = styled(Spinner)`
   margin: 0 0.25rem 0 0.25rem;
@@ -197,7 +198,7 @@ export default function Web3Status() {
     } else {
       return (
         <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
-          <Text>{t('Connect wallet')}</Text>
+          <Text>{isMobile? t('Connect') : t('Connect wallet')}</Text>
         </Web3StatusConnect>
       )
     }
