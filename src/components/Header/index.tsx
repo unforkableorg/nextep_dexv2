@@ -129,7 +129,6 @@ export default function Header() {
         <HeaderElement>
           <Title>
             {isMobile && (
-            <TitleText>
             <HistoryLink id="link" to="/">
               <img
                 style={{ height: '30px', marginLeft: '4px', marginTop: '4px' }}
@@ -137,14 +136,13 @@ export default function Header() {
                 alt="logo"
               />
             </HistoryLink>
-          </TitleText>
             )}
             {!isMobile && (
               <TitleText>
                 <HistoryLink id="link" to="/">
                   <img
                     style={{ height: '66px', marginLeft: '4px', marginTop: '4px' }}
-                    src={isDark ? WordmarkDark : Wordmark}
+                    src={Wordmark}
                     alt="logo"
                   />
                 </HistoryLink>

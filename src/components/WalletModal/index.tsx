@@ -375,7 +375,7 @@ export default function WalletModal({
           </HeaderRow>
         ) : (
           <HeaderRow>
-            <HoverText>Connect to a wallet</HoverText>
+            <HoverText>Connect wallet</HoverText>
           </HeaderRow>
         )}
         <ContentWrapper>
