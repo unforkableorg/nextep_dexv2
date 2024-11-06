@@ -22,7 +22,7 @@ const initialState: SwapState = {
     address: ''
   },
   [Field.OUTPUT]: {
-    address: ''
+    address: '0x432E4997060F2385Bdb32cDc8Be815C6b22a8a61'
   }
 }
 
