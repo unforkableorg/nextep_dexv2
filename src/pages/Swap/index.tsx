@@ -167,7 +167,6 @@ export default function Swap({ location: { search } }: RouteComponentProps) {
 
   return (
     <>
-      <TokenWarningCards tokens={tokens} />
       <AppBody>
         <Wrapper id="swap-page">
           <ConfirmationModal
