@@ -54,7 +54,7 @@ export default function TokenLogo({
 
   let path = ''
   // hard code to show ETH instead of WCXS in UI
-  if (address === WCXS[chainId].address) {
+  if (WCXS[chainId] && address === WCXS[chainId].address) {
     return <StyledEthereumLogo size={size} {...rest} />
   } else if (!error && !BAD_IMAGES[address] && isAddress(address)) {
     path = TOKEN_ICON_API(address)
